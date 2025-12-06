@@ -4,6 +4,7 @@ import './globals.css'
 import Link from 'next/link'
 import Image from 'next/image'
 import Footer from './components/Footer'
+import { Analytics } from '@vercel/analytics/next'
 
 // Load our fonts
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -84,6 +85,8 @@ export default function RootLayout({
         </main>
 
         <Footer />
+
+        <Analytics />
 
       </body>
     </html>
