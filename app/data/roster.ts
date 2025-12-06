@@ -33,7 +33,7 @@ export interface Team {
 
 export interface Match {
   id: string;
-  round: "Quarterfinals" | "Semifinals" | "Finals";
+  round: string;
   team1: string;
   team2: string;
   winner: string | null;
@@ -101,10 +101,10 @@ export const STATIC_TEAMS: Team[] = [
       { name: "Marge", role: "Member",  image: "SMarge.png", attributes: { speed: 0.3, aggression: 400, strafeRate: 0.2, meleeBias: 0.6 } },
     ]
   },
-  // 5. TEAM RING (Green)
+  // 5. TEAM RINGS (Green)
   {
-    id: "team-ring",
-    name: "Team Ring",
+    id: "team-rings",
+    name: "Team Rings",
     color: "border-green-500",
     shadow: "shadow-green-500/50",
     players: [

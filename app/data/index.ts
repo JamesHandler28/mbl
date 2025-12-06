@@ -7,11 +7,13 @@ import { STATIC_TEAMS } from './roster';
 // --- IMPORT YOUR EVENTS HERE ---
 import { S1_MAJOR_1_LOGS, S1_MAJOR_1_BRACKET, S1_MAJOR_1_INFO } from './events/s1_major1';
 import { S1_MAJOR_2_LOGS, S1_MAJOR_2_BRACKET, S1_MAJOR_2_INFO } from './events/s1_major2';
+import { S1_MAJOR_3_LOGS, S1_MAJOR_3_BRACKET, S1_MAJOR_3_INFO } from './events/s1_major3'; // <--- ADD THIS
 
 // 1. COMBINE ALL MATCH LOGS
 const ALL_MATCH_LOGS = [
   ...S1_MAJOR_1_LOGS,
   ...S1_MAJOR_2_LOGS,
+  ...S1_MAJOR_3_LOGS,
 ];
 
 // (DELETE THE INTERFACES 'Match' and 'Event' FROM HERE, THEY ARE IN ROSTER NOW)
@@ -58,14 +60,9 @@ export const leagueHistory = [
     title: "MBL - Season 1",
     status: "Completed",
     events: [
-      {
-        ...S1_MAJOR_1_INFO,
-        matches: S1_MAJOR_1_BRACKET
-      },
-      {
-        ...S1_MAJOR_2_INFO,
-        matches: S1_MAJOR_2_BRACKET
-      }
+      { ...S1_MAJOR_1_INFO, matches: S1_MAJOR_1_BRACKET },
+      { ...S1_MAJOR_2_INFO, matches: S1_MAJOR_2_BRACKET },
+      { ...S1_MAJOR_3_INFO, matches: S1_MAJOR_3_BRACKET },
     ]
   },
   // ... Season 2 placeholder ...

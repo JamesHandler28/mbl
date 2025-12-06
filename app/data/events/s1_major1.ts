@@ -5,20 +5,20 @@ import { Match } from '../roster'; // We import the Type from index (circular bu
 export const S1_MAJOR_1_INFO = {
   id: "s1-major-1",
   name: "Major 1: Single Elimination",
-  championId: "team-ring",
+  championId: "team-rings",
 };
 
 export const S1_MAJOR_1_BRACKET: Match[] = [
   // QUARTERFINALS
   { id: "m1", round: "Quarterfinals", team1: "mushroom-kingdom",    team2: "peanuts",       winner: "mushroom-kingdom",     score: "2 - 0" },
   { id: "m2", round: "Quarterfinals", team1: "south-park",          team2: "team-dc",       winner: "team-dc",              score: "1 - 2" },
-  { id: "m3", round: "Quarterfinals", team1: "bikini-bottom",       team2: "team-ring",     winner: "team-ring",            score: "0 - 2" },
+  { id: "m3", round: "Quarterfinals", team1: "bikini-bottom",       team2: "team-rings",     winner: "team-rings",            score: "0 - 2" },
   { id: "m4", round: "Quarterfinals", team1: "springfield",         team2: "quahog",        winner: "quahog",               score: "0 - 2" },
   // SEMIFINALS
   { id: "m5", round: "Semifinals",    team1: "mushroom-kingdom",    team2: "team-dc",       winner: "team-dc",              score: "0 - 2" },
-  { id: "m6", round: "Semifinals",    team1: "team-ring",           team2: "quahog",        winner: "team-ring",            score: "2 - 0" },
+  { id: "m6", round: "Semifinals",    team1: "team-rings",           team2: "quahog",        winner: "team-rings",            score: "2 - 0" },
   // FINALS
-  { id: "m7", round: "Finals",        team1: "team-dc",             team2: "team-ring",     winner: "team-ring",            score: "0 - 2" },
+  { id: "m7", round: "Finals",        team1: "team-dc",             team2: "team-rings",     winner: "team-rings",            score: "0 - 2" },
 ];
 
 export const S1_MAJOR_1_LOGS = [
@@ -62,7 +62,7 @@ export const S1_MAJOR_1_LOGS = [
     }
   },
 
-  // Match 3: Bikini Bottom (LOSS) vs Team Ring (WIN)
+  // Match 3: Bikini Bottom (LOSS) vs Team Rings (WIN)
   {
     matchId: "m3", teamId: "bikini-bottom", result: "LOSS", gamesCount: 2,
     stats: {
@@ -73,7 +73,7 @@ export const S1_MAJOR_1_LOGS = [
     }
   },
   {
-    matchId: "m3", teamId: "team-ring", result: "WIN", gamesCount: 2,
+    matchId: "m3", teamId: "team-rings", result: "WIN", gamesCount: 2,
     stats: {
       "Sonic":    [2, 1, 2, 27],
       "Knuckles": [1, 1, 0, 3],
@@ -122,9 +122,9 @@ export const S1_MAJOR_1_LOGS = [
     }
   },
 
-  // Match 6: Team Ring (WIN) vs Quahog (LOSS)
+  // Match 6: Team Rings (WIN) vs Quahog (LOSS)
   {
-    matchId: "m6", teamId: "team-ring", result: "WIN", gamesCount: 2,
+    matchId: "m6", teamId: "team-rings", result: "WIN", gamesCount: 2,
     stats: {
       "Sonic":    [4, 0, 1, 42],
       "Knuckles": [2, 0, 0, 12],
@@ -142,7 +142,7 @@ export const S1_MAJOR_1_LOGS = [
     }
   },
 
-  // Match 7: Team DC (LOSS) vs Team Ring (WIN)
+  // Match 7: Team DC (LOSS) vs Team Rings (WIN)
   {
     matchId: "m7", teamId: "team-dc", result: "LOSS", gamesCount: 2,
     stats: {
@@ -153,7 +153,7 @@ export const S1_MAJOR_1_LOGS = [
     }
   },
   {
-    matchId: "m7", teamId: "team-ring", result: "WIN", gamesCount: 2,
+    matchId: "m7", teamId: "team-rings", result: "WIN", gamesCount: 2,
     stats: {
       "Sonic":    [3, 2, 2, 33],
       "Knuckles": [3, 1, 1, 24],
