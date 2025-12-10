@@ -52,7 +52,7 @@ export const STATIC_TEAMS: Team[] = [
   // 1. BIKINI BOTTOM (Pink)
   {
     id: "bikini-bottom",
-    name: "Team Bikini Bottom",
+    name: "Bikini Bottom",
     color: "border-pink-500",
     shadow: "shadow-pink-500/50",
     players: [
@@ -65,7 +65,7 @@ export const STATIC_TEAMS: Team[] = [
   // 2. QUAHOG (Blue)
   {
     id: "quahog",
-    name: "Team Quahog",
+    name: "Quahog",
     color: "border-blue-500",
     shadow: "shadow-blue-500/50",
     players: [
@@ -78,7 +78,7 @@ export const STATIC_TEAMS: Team[] = [
   // 3. MUSHROOM KINGDOM (Red)
   {
     id: "mushroom-kingdom",
-    name: "Team Mushroom Kingdom",
+    name: "Mushroom Kingdom",
     color: "border-red-500",
     shadow: "shadow-red-500/50",
     players: [
@@ -91,7 +91,7 @@ export const STATIC_TEAMS: Team[] = [
   // 4. SPRINGFIELD (Yellow)
   {
     id: "springfield",
-    name: "Team Springfield",
+    name: "Springfield",
     color: "border-yellow-400",
     shadow: "shadow-yellow-400/50",
     players: [
@@ -104,7 +104,7 @@ export const STATIC_TEAMS: Team[] = [
   // 5. TEAM RINGS (Green)
   {
     id: "team-rings",
-    name: "Team Rings",
+    name: "Rings",
     color: "border-green-500",
     shadow: "shadow-green-500/50",
     players: [
@@ -117,7 +117,7 @@ export const STATIC_TEAMS: Team[] = [
   // 6. TEAM DC (Slate)
   {
     id: "team-dc",
-    name: "Team DC",
+    name: "DC",
     color: "border-slate-400",
     shadow: "shadow-slate-400/50",
     players: [
@@ -130,7 +130,7 @@ export const STATIC_TEAMS: Team[] = [
   // 7. SOUTH PARK (Gray)
   {
     id: "south-park",
-    name: "Team South Park",
+    name: "South Park",
     color: "border-gray-100",
     shadow: "shadow-gray-100/50",
     players: [
@@ -143,7 +143,7 @@ export const STATIC_TEAMS: Team[] = [
   // 8. PEANUTS (Orange)
   {
     id: "peanuts",
-    name: "Team Peanuts",
+    name: "Peanuts",
     color: "border-orange-500",
     shadow: "shadow-orange-500/50",
     players: [

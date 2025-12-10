@@ -11,28 +11,17 @@ export default function TeamsPage() {
     let losses = 0;
     let majorWins = 0;
     
-    // Count from History
     leagueHistory.forEach(season => {
       season.events.forEach(event => {
-        // Check for Major Title
-        if (event.championId === team.id) {
-          majorWins++;
-        }
-
-        // Check Matches
+        if (event.championId === team.id) majorWins++;
         event.matches.forEach(match => {
-          // KEY FIX: Only count stats if the match actually has a winner!
           if (match.winner) {
-            if (match.winner === team.id) {
-              wins++;
-            } else if (match.team1 === team.id || match.team2 === team.id) {
-              losses++;
-            }
+            if (match.winner === team.id) wins++;
+            else if (match.team1 === team.id || match.team2 === team.id) losses++;
           }
         });
       });
     });
-
     return { ...team, wins, losses, majorWins };
   }).sort((a, b) => {
     if (b.majorWins !== a.majorWins) return b.majorWins - a.majorWins;
@@ -40,24 +29,27 @@ export default function TeamsPage() {
   });
 
   return (
-    <div className="min-h-screen p-8 pb-20">
+    // FIXED: Added 'font-sans' here to ensure the whole page defaults to clean text
+    <div className="min-h-screen p-4 md:p-8 pb-20 pt-24 md:pt-28 font-sans text-slate-200">
       
       {/* HEADER */}
-      <div className="text-center mb-12">
-        <h1 className="font-header text-5xl md:text-6xl text-white drop-shadow-2xl uppercase tracking-tight">
+      <div className="text-center mb-6 md:mb-12">
+        {/* CHANGED: Swapped font-header for font-black */}
+        <h1 className="font-black text-4xl md:text-6xl text-white drop-shadow-2xl uppercase tracking-tight">
           LEAGUE <span className="text-mbl-yellow">STANDINGS</span>
         </h1>
       </div>
 
       {/* THE GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6 max-w-7xl mx-auto">
         
         {sortedTeams.map((team, rank) => (
-          <Link href={`/teams/${team.id}`} key={team.id} className="block group h-full">
+          // Keeps h-auto so cards hug their content
+          <Link href={`/teams/${team.id}`} key={team.id} className="block group h-auto">
             
             <div 
               className={`
-                relative h-full overflow-hidden rounded-xl 
+                relative overflow-hidden rounded-xl 
                 bg-gradient-to-b from-slate-800 to-mbl-darkblue 
                 border-2 ${team.color} 
                 shadow-[0_0_15px_rgba(0,0,0,0.3)] 
@@ -70,7 +62,7 @@ export default function TeamsPage() {
               {/* Background Glow */}
               <div className={`absolute -top-20 -right-20 w-32 h-32 ${team.color.replace('border-', 'bg-')} opacity-10 blur-3xl rounded-full group-hover:opacity-30 transition-opacity`}></div>
 
-              <div className="p-5 relative z-10 flex-grow">
+              <div className="p-4 md:p-5 relative z-10">
                 
                 {/* HEADER */}
                 <div className="mb-4 border-b border-white/5 pb-2 flex justify-between items-start">
@@ -80,8 +72,10 @@ export default function TeamsPage() {
                     <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-1">
                       Rank #{rank + 1}
                     </div>
-                    <h2 className="font-header text-2xl font-black italic text-white group-hover:text-mbl-yellow transition-colors uppercase tracking-tight">
-                      {team.name}
+                    
+                    {/* CHANGED: Swapped font-header for font-black */}
+                    <h2 className="font-black text-xl md:text-2xl italic text-white group-hover:text-mbl-yellow transition-colors uppercase tracking-tight">
+                        {team.name}
                     </h2>
                   </div>
                   
@@ -94,7 +88,8 @@ export default function TeamsPage() {
                     </div>
 
                     {team.majorWins > 0 && (
-                      <div className="flex items-center gap-1 text-[10px] font-bold text-mbl-yellow uppercase tracking-wider bg-mbl-yellow/10 px-2 py-0.5 rounded border border-mbl-yellow/30 animate-pulse">
+                      // FIXED: Added 'font-sans' explicitly here to fix the Serif issue
+                      <div className="flex items-center gap-1 text-[10px] font-sans font-bold text-mbl-yellow uppercase tracking-wider bg-mbl-yellow/10 px-2 py-0.5 rounded border border-mbl-yellow/30 animate-pulse">
                         <span>🏆</span> {team.majorWins} Major
                       </div>
                     )}
@@ -112,16 +107,17 @@ export default function TeamsPage() {
                       }
                     `}>
                       <div className="w-7 h-7 rounded-full overflow-hidden bg-black/50 relative border border-white/10 shrink-0">
-                         {player.image ? (
-                           <Image src={`/players/${player.image}`} alt={player.name} fill className="object-cover" />
-                         ) : (
-                           <div className="w-full h-full flex items-center justify-center text-xs text-gray-500">{player.name[0]}</div>
-                         )}
+                          {player.image ? (
+                            <Image src={`/players/${player.image}`} alt={player.name} fill className="object-cover" />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-xs text-gray-500 font-bold">{player.name[0]}</div>
+                          )}
                       </div>
 
                       <div className="flex-grow">
+                        {/* CHANGED: Swapped font-header for font-bold */}
                         <div className={`
-                          font-header font-bold uppercase tracking-wide text-xs
+                          font-bold uppercase tracking-wide text-xs
                           ${index === 0 ? 'text-white' : 'text-slate-400'}
                         `}>
                           {player.name}
@@ -134,7 +130,8 @@ export default function TeamsPage() {
               </div>
 
               {/* View Button */}
-              <div className="w-full py-2 bg-black/40 backdrop-blur text-center text-[10px] font-header font-bold uppercase tracking-widest text-mbl-teal opacity-0 group-hover:opacity-100 transition-opacity">
+              {/* CHANGED: Swapped font-header for font-bold */}
+              <div className="absolute bottom-0 left-0 w-full py-1 bg-black/60 backdrop-blur text-center text-[10px] font-bold uppercase tracking-widest text-mbl-teal opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                 View Details
               </div>
 
