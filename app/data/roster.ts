@@ -70,7 +70,7 @@ export const STATIC_TEAMS: Team[] = [
     shadow: "shadow-blue-500/50",
     players: [
       { name: "Peter",  role: "Captain", image: "QPeter.png",  attributes: { speed: 0.4, aggression: 100, strafeRate: 0.0, meleeBias: 0.4 } },
-      { name: "Stewie", role: "Member",  image: "QStewie.png", attributes: { speed: 0.2, aggression: 700, strafeRate: 0.3, meleeBias: 0.3 } },
+      { name: "Stewie", role: "Member",  image: "QStewie.png", attributes: { speed: 0.3, aggression: 700, strafeRate: 0.3, meleeBias: 0.3 } },
       { name: "Brian",  role: "Member",  image: "QBrian.png",  attributes: { speed: 0.7, aggression: 400, strafeRate: 0.1, meleeBias: 0.6 } },
       { name: "Lois",   role: "Member",  image: "QLois.png",   attributes: { speed: 0.5, aggression: 200, strafeRate: 0.2, meleeBias: 0.5 } },
     ]
@@ -134,7 +134,7 @@ export const STATIC_TEAMS: Team[] = [
     color: "border-gray-100",
     shadow: "shadow-gray-100/50",
     players: [
-      { name: "Cartman", role: "Captain", image: "SPCartman.png", attributes: { speed: 0.2, aggression: 150, strafeRate: 0.1, meleeBias: 0.4 } },
+      { name: "Cartman", role: "Captain", image: "SPCartman.png", attributes: { speed: 0.3, aggression: 150, strafeRate: 0.1, meleeBias: 0.4 } },
       { name: "Kenny",   role: "Member",  image: "SPKenny.png",   attributes: { speed: 0.7, aggression: 200, strafeRate: 0.5, meleeBias: 0.5 } },
       { name: "Kyle",    role: "Member",  image: "SPKyle.png",    attributes: { speed: 0.4, aggression: 500, strafeRate: 0.2, meleeBias: 0.5 } },
       { name: "Stan",    role: "Member",  image: "SPStan.png",    attributes: { speed: 0.5, aggression: 300, strafeRate: 0.2, meleeBias: 0.4 } },
