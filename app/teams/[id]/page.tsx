@@ -1,21 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { teamsData, leagueHistory } from '../../data';
+import { teamsData, leagueHistory, slugify, computeEffectiveOVR, normalizeStat } from '../../data';
 
-// Helper: Attribute Bar
-const AttributeBar = ({ label, value, max = 1, color }: { label: string, value: number, max?: number, color: string }) => {
-  const pct = Math.min(100, Math.max(0, (value / max) * 100));
-  return (
-    <div className="flex items-center gap-2 text-[10px] font-sans font-bold w-full">
-      <span className="w-12 text-slate-400 text-right uppercase tracking-tighter">{label}</span>
-      <div className="flex-grow h-1.5 bg-slate-800 rounded-full overflow-hidden border border-white/5">
-        <div className={`h-full ${color} shadow-[0_0_8px_currentColor]`} style={{ width: `${pct}%` }}></div>
-      </div>
-      <span className="w-6 text-white text-left ml-1">{value}</span>
-    </div>
-  );
-};
+// Helper: FIFA-card stat cell (3-letter abbreviation + big number)
+const FifaStat = ({ label, value }: { label: string, value: number }) => (
+  <div className="flex items-center gap-2">
+    <span className="font-sans font-black text-lg md:text-xl text-white w-8 text-right">{value}</span>
+    <span className="font-sans font-bold text-[10px] text-slate-400 uppercase tracking-widest">{label}</span>
+  </div>
+);
 
 // Helper: Calculate Combat Score
 const getCombatScore = (p: any) => (p.kills || 0) * 10 + (p.assists || 0) * 5 - (p.deaths || 0) * 3;
@@ -116,76 +110,164 @@ export default async function TeamDetailPage({ params }: { params: Promise<{ id:
         </div>
       </div>
 
-      {/* --- ROSTER GRID --- */}
+      {/* --- ROSTER GRID (FIFA-style cards) --- */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {sortedPlayers.map((player) => (
-          <div 
-            key={player.name} 
-            className={`
-              relative group overflow-hidden rounded-xl p-4 flex flex-col items-center border transition-all duration-300
-              ${player.isCaptain 
-                ? `bg-gradient-to-b from-slate-800 to-mbl-darkblue ${team.color} shadow-lg scale-[1.01] z-10` 
-                : 'bg-slate-900/50 border-white/5 hover:border-mbl-teal/50 hover:bg-slate-800'
-              }
-            `}
-          >
-            {/* RANK BADGE - INCREASED SIZE */}
-            <div className="absolute top-2 left-2 z-20 bg-black/60 backdrop-blur border border-white/10 px-3 py-1 rounded text-xs font-sans font-bold uppercase tracking-wider text-slate-300 shadow-md">
-              Rank <span className="text-white text-sm font-black ml-1">#{player.stats.rank}</span>
-            </div>
+        {sortedPlayers.map((player) => {
+          const acc = normalizeStat(player.attributes?.accuracy ?? 0, 1);
+          const pat = normalizeStat(player.attributes?.patience ?? 0, 250);
+          const mel = normalizeStat(player.attributes?.meleeBias ?? 0, 1);
+          const str = normalizeStat(player.attributes?.strafeRate ?? 0, 1);
+          const agg = normalizeStat(player.attributes?.aggression ?? 0, 800);
+          const pck = normalizeStat(player.attributes?.packAffinity ?? 0, 1);
+          const ovr = computeEffectiveOVR(player);
 
-            {/* AVATAR */}
-            <div className={`
-              w-20 h-20 rounded-full mb-3 flex items-center justify-center overflow-hidden relative
-              ${player.isCaptain ? '' : 'bg-slate-800'}
-            `}>
-              {player.image ? (
-                <Image src={`/players/${player.image}`} alt={player.name} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
-              ) : (
-                <span className="font-sans font-black text-slate-500 text-2xl">{player.name.charAt(0)}</span>
-              )}
-            </div>
+          return (
+            <Link href={`/players/${slugify(player.name)}`} key={player.name} className="block">
+              <div 
+                className={`
+                  relative group overflow-hidden rounded-2xl p-4 flex flex-col items-center border transition-all duration-300 cursor-pointer
+                  ${player.isCaptain 
+                    ? `bg-gradient-to-b from-slate-800 to-mbl-darkblue ${team.color} shadow-lg scale-[1.01] z-10` 
+                    : 'bg-slate-900/50 border-white/5 hover:border-mbl-teal/50 hover:bg-slate-800'
+                  }
+                `}
+              >
+                {/* OVR BADGE (top-left, FIFA-card style) */}
+                <div className="absolute top-2 left-2 z-20 flex flex-col items-center bg-black/60 backdrop-blur border border-mbl-yellow/40 rounded-lg px-2 py-1 shadow-md">
+                  <span className="font-sans font-black text-lg text-mbl-yellow leading-none">{ovr}</span>
+                  <span className="font-sans font-bold text-[8px] text-slate-400 uppercase tracking-widest leading-none mt-0.5">OVR</span>
+                </div>
 
-            {/* NAME */}
-            <h2 className={`font-sans font-black uppercase text-xl mb-0.5 tracking-wide text-center break-all ${player.isCaptain ? 'text-white' : 'text-slate-200'}`}>
-              {player.name}
-            </h2>
-            
-            {/* CAPTAIN / MEMBER BADGE */}
-            <span className={`mb-3 text-[9px] font-sans font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${player.isCaptain ? 'bg-mbl-yellow text-mbl-darkblue' : 'bg-slate-800 text-slate-500'}`}>
-              {player.isCaptain ? 'Captain' : 'Member'}
-            </span>
+                {/* RANK BADGE */}
+                <div className="absolute top-2 right-2 z-20 bg-black/60 backdrop-blur border border-white/10 px-2 py-1 rounded text-[10px] font-sans font-bold uppercase tracking-wider text-slate-300 shadow-md">
+                  #{player.stats.rank}
+                </div>
 
-            {/* STATS GRID */}
-            <div className="grid grid-cols-3 gap-1 w-full mb-3 border-t border-b border-white/5 py-2">
-              <div className="text-center">
-                <div className="text-[9px] text-slate-500 font-sans font-bold uppercase">Score</div>
-                <div className="font-sans font-black text-lg text-mbl-teal">{player.stats.score}</div>
+                {/* AVATAR */}
+                <div className={`
+                  w-20 h-20 rounded-full mt-6 mb-3 flex items-center justify-center overflow-hidden relative
+                  ${player.isCaptain ? '' : 'bg-slate-800'}
+                `}>
+                  {player.image ? (
+                    <Image src={`/players/${player.image}`} alt={player.name} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
+                  ) : (
+                    <span className="font-sans font-black text-slate-500 text-2xl">{player.name.charAt(0)}</span>
+                  )}
+                </div>
+
+                {/* NAME */}
+                <h2 className={`font-sans font-black uppercase text-xl mb-0.5 tracking-wide text-center break-all ${player.isCaptain ? 'text-white' : 'text-slate-200'}`}>
+                  {player.name}
+                </h2>
+                
+                {/* CAPTAIN / MEMBER BADGE */}
+                <span className={`mb-3 text-[9px] font-sans font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${player.isCaptain ? 'bg-mbl-yellow text-mbl-darkblue' : 'bg-slate-800 text-slate-500'}`}>
+                  {player.isCaptain ? 'Captain' : 'Member'}
+                </span>
+
+                {/* COMBAT STATS */}
+                <div className="grid grid-cols-3 gap-1 w-full mb-3 border-t border-b border-white/5 py-2">
+                  <div className="text-center">
+                    <div className="text-[9px] text-slate-500 font-sans font-bold uppercase">Score</div>
+                    <div className="font-sans font-black text-lg text-mbl-teal">{player.stats.score}</div>
+                  </div>
+                  <div className="text-center border-l border-white/5">
+                    <div className="text-[9px] text-slate-500 font-sans font-bold uppercase">Kills</div>
+                    <div className="font-sans font-black text-lg text-mbl-yellow">{player.kills || 0}</div>
+                  </div>
+                  <div className="text-center border-l border-white/5">
+                    <div className="text-[9px] text-slate-500 font-sans font-bold uppercase">Deaths</div>
+                    <div className="font-sans font-black text-lg text-mbl-pink">{player.deaths || 0}</div>
+                  </div>
+                </div>
+
+                {/* FIFA-STYLE STAT GRID: 2 columns x 3 rows */}
+                {player.attributes && (
+                  <div className="w-full grid grid-cols-2 gap-x-2 gap-y-1.5 bg-black/30 p-3 rounded-lg border border-white/5 backdrop-blur-sm">
+                    <FifaStat label="ACC" value={acc} />
+                    <FifaStat label="STR" value={str} />
+                    <FifaStat label="PAT" value={pat} />
+                    <FifaStat label="AGG" value={agg} />
+                    <FifaStat label="MEL" value={mel} />
+                    <FifaStat label="PCK" value={pck} />
+                  </div>
+                )}
               </div>
-              <div className="text-center border-l border-white/5">
-                <div className="text-[9px] text-slate-500 font-sans font-bold uppercase">Kills</div>
-                <div className="font-sans font-black text-lg text-mbl-yellow">{player.kills || 0}</div>
-              </div>
-              <div className="text-center border-l border-white/5">
-                <div className="text-[9px] text-slate-500 font-sans font-bold uppercase">Deaths</div>
-                <div className="font-sans font-black text-lg text-mbl-pink">{player.deaths || 0}</div>
-              </div>
-            </div>
-
-            {/* ATTRIBUTES */}
-            {player.attributes && (
-              <div className="w-full space-y-1 bg-black/30 p-2 rounded-lg border border-white/5 backdrop-blur-sm">
-                <div className="text-center text-[9px] font-sans font-bold text-slate-400 uppercase tracking-widest mb-1 opacity-70">Stats</div>
-                <AttributeBar label="Speed" value={player.attributes.speed} color="bg-mbl-yellow" />
-                <AttributeBar label="Vision" value={player.attributes.aggression} max={800} color="bg-mbl-pink" />
-                <AttributeBar label="Strafe" value={player.attributes.strafeRate} color="bg-blue-400" />
-                <AttributeBar label="Melee" value={player.attributes.meleeBias} color="bg-green-400" />
-              </div>
-            )}
-
-          </div>
-        ))}
+            </Link>
+          );
+        })}
       </div>
+
+      {/* --- TEAM SCHEDULE (below roster) --- */}
+      {(() => {
+        const teamMatches = leagueHistory.flatMap(season =>
+          season.events.flatMap(event =>
+            event.matches
+              .filter(m => m.team1 === team.id || m.team2 === team.id)
+              .map(m => ({ ...m, eventName: event.name }))
+          )
+        );
+
+        if (teamMatches.length === 0) return null;
+
+        const getOpponentInfo = (match: typeof teamMatches[number]) => {
+          const oppId = match.team1 === team.id ? match.team2 : match.team1;
+          return teamsData.find(t => t.id === oppId) || { name: "TBD", color: "border-gray-700", id: oppId };
+        };
+
+        return (
+          <div className="mt-10">
+            <h2 className="font-sans font-black uppercase text-lg text-white mb-3 tracking-wide border-b border-white/10 pb-2">
+              Schedule
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+              {teamMatches.map(match => {
+                const opponent = getOpponentInfo(match);
+                const isPlayed = match.winner !== null;
+                const isWin = match.winner === team.id;
+
+                const cardClasses = `
+                  flex items-center justify-between gap-2 p-3 rounded-lg border text-sm transition-colors
+                  ${isPlayed
+                    ? isWin
+                      ? 'bg-mbl-teal/10 border-mbl-teal/30 hover:bg-mbl-teal/20 cursor-pointer'
+                      : 'bg-mbl-pink/10 border-mbl-pink/30 hover:bg-mbl-pink/20 cursor-pointer'
+                    : 'bg-slate-900/50 border-white/5'
+                  }
+                `;
+
+                const cardContent = (
+                  <>
+                    <div className="flex flex-col">
+                      <span className="text-[9px] text-slate-500 font-sans font-bold uppercase tracking-widest">{match.round}</span>
+                      <span className="font-sans font-bold text-white">vs {opponent.name}</span>
+                    </div>
+                    <span className={`
+                      text-[10px] font-sans font-bold uppercase px-2 py-0.5 rounded shrink-0
+                      ${isPlayed
+                        ? isWin ? 'bg-mbl-teal/20 text-mbl-teal' : 'bg-mbl-pink/20 text-mbl-pink'
+                        : 'bg-slate-800 text-slate-500'
+                      }
+                    `}>
+                      {isPlayed ? (isWin ? 'WIN' : 'LOSS') : 'TBD'}
+                    </span>
+                  </>
+                );
+
+                return isPlayed ? (
+                  <Link href={`/matches/${match.id}`} key={match.id} className={cardClasses}>
+                    {cardContent}
+                  </Link>
+                ) : (
+                  <div key={match.id} className={cardClasses}>
+                    {cardContent}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }

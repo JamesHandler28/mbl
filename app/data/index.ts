@@ -5,22 +5,19 @@ export * from './roster';
 import { STATIC_TEAMS } from './roster';
 
 // --- IMPORT YOUR EVENTS HERE ---
-import { S1_MAJOR_1_LOGS, S1_MAJOR_1_BRACKET, S1_MAJOR_1_INFO } from './events/s1_major1';
-import { S1_MAJOR_2_LOGS, S1_MAJOR_2_BRACKET, S1_MAJOR_2_INFO } from './events/s1_major2';
-import { S1_MAJOR_3_LOGS, S1_MAJOR_3_BRACKET, S1_MAJOR_3_INFO } from './events/s1_major3'; // <--- ADD THIS
+// The old s1_major1 / s1_major2 / s1_major3 files are no longer used —
+// Season 1 is now a regular season + top-4 playoffs instead of majors.
+import { S1_REGULAR_SEASON_LOGS, S1_REGULAR_SEASON_BRACKET, S1_REGULAR_SEASON_INFO } from './events/s1_regular_season';
+import { S1_PLAYOFFS_LOGS, S1_PLAYOFFS_BRACKET, S1_PLAYOFFS_INFO } from './events/s1_playoffs';
 
 // 1. COMBINE ALL MATCH LOGS
-const ALL_MATCH_LOGS = [
-  ...S1_MAJOR_1_LOGS,
-  ...S1_MAJOR_2_LOGS,
-  ...S1_MAJOR_3_LOGS,
+export const ALL_MATCH_LOGS = [
+  ...S1_REGULAR_SEASON_LOGS,
+  ...S1_PLAYOFFS_LOGS,
 ];
-
-// (DELETE THE INTERFACES 'Match' and 'Event' FROM HERE, THEY ARE IN ROSTER NOW)
 
 // 2. CALCULATE STATS
 export const teamsData = STATIC_TEAMS.map(team => {
-   // ... (Keep the calculation logic exactly the same) ...
    const playersWithStats = team.players.map(player => ({
     ...player,
     kills: 0,
@@ -58,12 +55,11 @@ export const leagueHistory = [
   {
     id: "season-1",
     title: "MBL - Season 1",
-    status: "Completed",
+    status: "In Progress", // change to "Completed" once playoffs finish
     events: [
-      { ...S1_MAJOR_1_INFO, matches: S1_MAJOR_1_BRACKET },
-      { ...S1_MAJOR_2_INFO, matches: S1_MAJOR_2_BRACKET },
-      { ...S1_MAJOR_3_INFO, matches: S1_MAJOR_3_BRACKET },
+      { ...S1_REGULAR_SEASON_INFO, matches: S1_REGULAR_SEASON_BRACKET },
+      { ...S1_PLAYOFFS_INFO, matches: S1_PLAYOFFS_BRACKET },
     ]
   },
-  // ... Season 2 placeholder ...
+  // Season 2 placeholder — add here once Season 1 wraps up
 ];

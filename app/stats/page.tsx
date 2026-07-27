@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
-import { teamsData } from '../data';
+import Link from 'next/link';
+import { teamsData, slugify, computeEffectiveOVR } from '../data';
 
 // Helper: Calculate Combat Score
 const getCombatScore = (kills: number, assists: number, deaths: number) => 
@@ -15,7 +16,7 @@ const SortIcon = ({ active, direction }: { active: boolean, direction: 'asc' | '
 export default function StatsPage() {
   
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' }>({ 
-    key: 'score', 
+    key: 'ovr', 
     direction: 'desc' 
   });
 
@@ -29,10 +30,12 @@ export default function StatsPage() {
         const rawDpg = player.gamesPlayed > 0 ? player.damageDealt / player.gamesPlayed : 0;
         
         const combatScore = getCombatScore(player.kills || 0, player.assists || 0, player.deaths || 0);
+        const ovr = computeEffectiveOVR(player);
 
         return {
           ...player,
           teamName: team.name,
+          ovr,
           kd: parseFloat(kdValue.toFixed(2)),
           score: combatScore,
           rawKpg, 
@@ -128,7 +131,7 @@ export default function StatsPage() {
         {/* TABLE CONTAINER */}
         {/* Added pb-20 to ensure tooltips at the bottom don't get hidden by container overflow */}
         <div className="overflow-x-auto pb-20">
-          <table className="w-full text-left border-collapse min-w-[1100px]">
+          <table className="w-full text-left border-collapse min-w-[1200px]">
             <thead className="bg-mbl-darkblue text-mbl-teal font-sans uppercase text-xs font-bold tracking-widest border-b border-white/10">
               <tr>
                 {/* Sticky Rank Column */}
@@ -138,6 +141,14 @@ export default function StatsPage() {
                 <th className="p-3 md:p-4 text-white sticky left-[60px] bg-mbl-darkblue z-10 shadow-[2px_0_5px_rgba(0,0,0,0.5)]">Agent</th>
                 
                 <th className="p-3 md:p-4 text-slate-400">Team</th>
+
+                <HeaderCell 
+                  label="OVR" 
+                  sortKey="ovr" 
+                  color="mbl-yellow" 
+                  tooltipAlign="left"
+                  tooltip="Overall Rating: purely attribute-based until a player has logged 5+ games, then gradually blends in actual win rate and combat performance (fully blended at 20+ games)."
+                />
                 
                 {/* LEFT ALIGNED TOOLTIPS */}
                 <HeaderCell 
@@ -226,15 +237,19 @@ export default function StatsPage() {
                   
                   {/* Sticky Name Cell */}
                   <td className="p-3 md:p-4 font-bold text-white sticky left-[60px] bg-slate-900 group-hover:bg-slate-800 transition-colors z-10 border-r border-white/5 shadow-[2px_0_5px_rgba(0,0,0,0.5)]">
-                    <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-slate-700 overflow-hidden border border-white/10 group-hover:border-mbl-yellow transition-colors shrink-0">
-                           {player.image && <img src={`/players/${player.image}`} alt={player.name} className="w-full h-full object-cover" />}
-                        </div>
-                        {player.name}
-                    </div>
+                    <Link href={`/players/${slugify(player.name)}`} className="flex items-center gap-3 hover:text-mbl-yellow transition-colors">
+                      <div className="w-8 h-8 rounded-full bg-slate-700 overflow-hidden border border-white/10 group-hover:border-mbl-yellow transition-colors shrink-0">
+                         {player.image && <img src={`/players/${player.image}`} alt={player.name} className="w-full h-full object-cover" />}
+                      </div>
+                      {player.name}
+                    </Link>
                   </td>
                   
                   <td className="p-3 md:p-4 text-slate-400 text-xs">{player.teamName}</td>
+
+                  <td className="p-3 md:p-4 text-center font-black text-lg text-mbl-yellow">
+                    {player.ovr}
+                  </td>
                   
                   <td className="p-3 md:p-4 text-center font-black text-lg text-mbl-teal">
                     {player.score}

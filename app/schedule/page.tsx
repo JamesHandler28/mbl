@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { teamsData, leagueHistory, Match } from '../data';
 import Image from 'next/image';
 
@@ -9,95 +10,45 @@ const getTeamInfo = (id: string) => {
   return team ? { name: team.name, color: team.color, image: team.players[0].image } : { name: "TBD", color: "border-gray-700", image: null };
 };
 
-// --- GROUP TABLE COMPONENT (Unchanged) ---
-const GroupTable = ({ groupName, matches }: { groupName: string, matches: Match[] }) => {
-  const groupMatches = matches.filter(m => m.round === groupName);
-  
-  const stats: Record<string, { w: number, l: number, id: string }> = {};
-
-  groupMatches.forEach(m => {
-    if (!stats[m.team1]) stats[m.team1] = { w: 0, l: 0, id: m.team1 };
-    if (!stats[m.team2]) stats[m.team2] = { w: 0, l: 0, id: m.team2 };
-
-    if (m.winner) {
-      if (m.winner === m.team1) {
-        stats[m.team1].w++;
-        stats[m.team2].l++;
-      } else {
-        stats[m.team2].w++;
-        stats[m.team1].l++;
-      }
-    }
-  });
-
-  const standings = Object.values(stats).sort((a, b) => {
-    if (b.w !== a.w) return b.w - a.w;
-    return a.l - b.l;
-  });
-
-  return (
-    <div className="bg-slate-900/80 border border-white/10 rounded-xl overflow-hidden mb-0 w-full md:w-96 shadow-xl">
-      <div className="bg-mbl-darkblue border-b border-mbl-teal/30 p-3 text-center">
-        <h3 className="text-mbl-teal font-header uppercase tracking-widest text-sm">{groupName} Standings</h3>
-      </div>
-      <table className="w-full text-left text-sm">
-        <thead className="bg-black/20 text-slate-500 font-mono text-[10px] uppercase">
-          <tr>
-            <th className="p-3">Team</th>
-            <th className="p-3 text-center text-mbl-yellow">W</th>
-            <th className="p-3 text-center text-mbl-pink">L</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-white/5">
-          {standings.map((stat) => {
-            const team = getTeamInfo(stat.id);
-            return (
-              <tr key={stat.id} className="hover:bg-white/5 transition-colors">
-                <td className="p-3 font-bold text-white flex items-center gap-3">
-                  <div className={`w-6 h-6 rounded-full border ${team.color} overflow-hidden bg-black shrink-0`}>
-                    {team.image && <Image src={`/players/${team.image}`} alt={team.name} width={24} height={24} className="object-cover" />}
-                  </div>
-                  <span className="truncate">{team.name}</span>
-                </td>
-                <td className="p-3 text-center font-bold text-mbl-yellow">{stat.w}</td>
-                <td className="p-3 text-center font-bold text-mbl-pink">{stat.l}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-  );
-};
-
-// --- MATCH CARD COMPONENT (Unchanged) ---
+// --- MATCH CARD (redesigned: compact, less clutter, no redundant round label) ---
 const MatchCard = ({ match }: { match: Match }) => {
   const t1 = getTeamInfo(match.team1);
   const t2 = getTeamInfo(match.team2);
+  const isPlayed = match.winner !== null;
 
-  return (
-    <div className="relative w-full max-w-[280px] group font-sans">
-      <div className="absolute -inset-1 bg-gradient-to-r from-mbl-teal to-mbl-pink opacity-0 group-hover:opacity-40 blur transition duration-500"></div>
-      <div className="relative bg-slate-900 border border-slate-700 rounded-xl overflow-hidden shadow-xl mb-4 flex flex-col">
-        <div className="bg-black/40 flex justify-between items-center px-4 py-2 border-b border-white/5">
-          <span className="text-[9px] text-mbl-teal uppercase font-header font-bold tracking-widest truncate max-w-[100px]">{match.round}</span>
-          <div className="bg-mbl-darkblue border border-mbl-teal/50 px-2 py-0.5 rounded text-[10px] font-header font-bold text-white shadow-sm">
-            {match.score}
-          </div>
+  const TeamRow = ({ info, isWinner }: { info: ReturnType<typeof getTeamInfo>, isWinner: boolean }) => (
+    <div className={`flex items-center gap-2 p-2 rounded-lg transition-colors ${isWinner ? 'bg-mbl-yellow/10' : ''}`}>
+      <div className={`w-8 h-8 rounded-full border-2 ${info.color} bg-black overflow-hidden shrink-0 relative`}>
+        {info.image && <Image src={`/players/${info.image}`} alt={info.name} fill className="object-cover" />}
+      </div>
+      <span className={`font-sans font-bold text-sm truncate ${isWinner ? 'text-mbl-yellow' : 'text-slate-300'}`}>
+        {info.name}
+      </span>
+      {isWinner && <span className="ml-auto text-xs">🏆</span>}
+    </div>
+  );
+
+  const cardBody = (
+    <div className="relative group font-sans w-full">
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-mbl-teal to-mbl-pink opacity-0 group-hover:opacity-30 blur transition duration-300 rounded-xl"></div>
+      <div className={`relative bg-slate-900 border border-slate-700/70 rounded-xl overflow-hidden shadow-lg ${isPlayed ? 'group-hover:border-mbl-teal/50 transition-colors' : ''}`}>
+        <div className="p-2 space-y-1">
+          <TeamRow info={t1} isWinner={match.winner === match.team1} />
+          <TeamRow info={t2} isWinner={match.winner === match.team2} />
         </div>
-        <div className="p-3 space-y-2">
-           <div className={`flex justify-between items-center p-1.5 rounded transition-colors border ${match.winner === match.team1 ? 'bg-mbl-yellow/10 border-mbl-yellow/30' : 'bg-transparent border-transparent'}`}>
-             <span className={`font-header font-bold text-xs ${match.winner === match.team1 ? 'text-mbl-yellow' : 'text-slate-400'}`}>{t1.name}</span>
-             {match.winner === match.team1 && <span className="text-[10px]">🏆</span>}
-           </div>
-           <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
-           <div className={`flex justify-between items-center p-1.5 rounded transition-colors border ${match.winner === match.team2 ? 'bg-mbl-yellow/10 border-mbl-yellow/30' : 'bg-transparent border-transparent'}`}>
-             <span className={`font-header font-bold text-xs ${match.winner === match.team2 ? 'text-mbl-yellow' : 'text-slate-400'}`}>{t2.name}</span>
-             {match.winner === match.team2 && <span className="text-[10px]">🏆</span>}
-           </div>
+        <div className={`px-3 py-1.5 text-center text-[11px] font-bold tracking-wide border-t border-white/5 ${isPlayed ? 'bg-black/30 text-white' : 'bg-black/10 text-slate-500'}`}>
+          {isPlayed ? match.score : 'Not Played'}
         </div>
       </div>
     </div>
+  );
+
+  return isPlayed ? (
+    <Link href={`/matches/${match.id}`} className="block cursor-pointer">
+      {cardBody}
+    </Link>
+  ) : (
+    cardBody
   );
 };
 
@@ -109,8 +60,15 @@ export default function SchedulePage() {
   const currentEvent = currentSeason.events.find(e => e.id === selectedEventId);
 
   const rounds = currentEvent ? Array.from(new Set(currentEvent.matches.map(m => m.round))) : [];
-  const groupRounds = rounds.filter(r => r.toLowerCase().includes('group'));
-  const bracketRounds = rounds.filter(r => !r.toLowerCase().includes('group'));
+  // Weekly rounds ("Week 1", "Week 2"...) get the clean grid treatment.
+  // Anything else (Semifinals, Final, etc.) keeps the side-by-side
+  // bracket-column layout, since those have far fewer matches per round.
+  const weekRounds = rounds.filter(r => r.toLowerCase().startsWith('week')).sort((a, b) => {
+    const numA = parseInt(a.replace(/\D/g, ''), 10) || 0;
+    const numB = parseInt(b.replace(/\D/g, ''), 10) || 0;
+    return numA - numB;
+  });
+  const bracketRounds = rounds.filter(r => !r.toLowerCase().startsWith('week'));
 
   return (
     <div className="min-h-screen p-4 md:p-8 pb-20 pt-24 md:pt-28 font-sans">
@@ -155,15 +113,11 @@ export default function SchedulePage() {
                   }
                 `}
               >
-                {/* FIX: Removed large gap, relying on ml-auto below */}
                 <div className="flex flex-col md:flex-row items-center relative z-10 gap-6 md:gap-4">
-                  
-                  {/* Left Side (Name) */}
                   <div className="text-center md:text-left">
                     <h3 className={`font-header text-2xl md:text-3xl italic uppercase transition-colors ${isUpcoming ? 'text-slate-500' : 'text-white group-hover:text-mbl-yellow'}`}>
                       {event.name}
                     </h3>
-                    
                     <p className="text-slate-400 font-header text-xs mt-2 tracking-wide">
                       {isUpcoming 
                         ? 'SCHEDULE TBD' 
@@ -172,8 +126,6 @@ export default function SchedulePage() {
                     </p>
                   </div>
 
-                  {/* NEW WRAPPER for Right Side */}
-                  {/* md:ml-auto pushes this entire block to the right edge on desktop */}
                   <div className="w-full md:w-auto md:ml-auto flex justify-center md:block">
                     {event.championId ? (
                         <div className="text-center md:text-right bg-black/20 md:bg-transparent p-4 md:p-0 rounded-lg md:rounded-none">
@@ -202,9 +154,9 @@ export default function SchedulePage() {
         </div>
       )}
 
-      {/* DETAILED VIEW (Same as before) */}
+      {/* DETAILED VIEW */}
       {currentEvent && (
-        <div className="animate-fadeIn">
+        <div className="animate-fadeIn max-w-6xl mx-auto">
           <button 
             onClick={() => setSelectedEventId(null)}
             className="mb-8 text-slate-400 hover:text-white flex items-center gap-2 font-header text-sm tracking-widest transition-colors uppercase"
@@ -212,31 +164,22 @@ export default function SchedulePage() {
             ← Back to List
           </button>
 
-          <h2 className="font-header text-3xl md:text-4xl text-center text-white mb-8 md:mb-12 italic drop-shadow-lg">{currentEvent.name}</h2>
+          <h2 className="font-header text-3xl md:text-4xl text-center text-white mb-10 italic drop-shadow-lg">{currentEvent.name}</h2>
 
-          {groupRounds.length > 0 && (
-            <div className="flex flex-wrap justify-center gap-8 mb-16">
-              {groupRounds.sort().map(group => (
-                <GroupTable key={group} groupName={group} matches={currentEvent.matches} />
-              ))}
-            </div>
-          )}
-
-          {groupRounds.length > 0 && (
-            <div className="pb-12 max-w-6xl mx-auto space-y-12">
-              {groupRounds.sort().map(roundName => (
-                <div key={roundName}>
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="h-px bg-white/10 flex-grow"></div>
-                    <div className="text-center text-slate-500 font-mono uppercase tracking-widest text-xs">
-                      {roundName} Schedule
-                    </div>
+          {/* WEEKLY MATCHES — clean grid per week, no side-scrolling columns */}
+          {weekRounds.length > 0 && (
+            <div className="space-y-10">
+              {weekRounds.map(weekName => (
+                <div key={weekName}>
+                  <div className="flex items-center gap-4 mb-4">
+                    <h3 className="font-header text-lg text-mbl-teal uppercase tracking-widest whitespace-nowrap">
+                      {weekName}
+                    </h3>
                     <div className="h-px bg-white/10 flex-grow"></div>
                   </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 justify-items-center">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                     {currentEvent.matches
-                      .filter(m => m.round === roundName)
+                      .filter(m => m.round === weekName)
                       .map(m => <MatchCard key={m.id} match={m} />)
                     }
                   </div>
@@ -245,12 +188,13 @@ export default function SchedulePage() {
             </div>
           )}
 
+          {/* TRUE BRACKET ROUNDS (Semifinals, Final, etc.) — side-by-side columns */}
           {bracketRounds.length > 0 && (
-            <div className="overflow-x-auto pb-12 -mx-4 md:mx-0 px-4 md:px-0">
+            <div className="overflow-x-auto pb-12 -mx-4 md:mx-0 px-4 md:px-0 mt-4">
               <div className="flex gap-8 md:gap-16 justify-start md:justify-center min-w-[max-content] px-4">
                 {bracketRounds.map(roundName => (
-                  <div key={roundName} className="flex flex-col gap-6 justify-center">
-                    <div className="text-center text-mbl-teal font-header uppercase tracking-widest text-sm mb-4 border-b border-mbl-teal/30 pb-2">
+                  <div key={roundName} className="flex flex-col gap-4 justify-center w-56">
+                    <div className="text-center text-mbl-teal font-header uppercase tracking-widest text-sm mb-2 border-b border-mbl-teal/30 pb-2">
                       {roundName}
                     </div>
                     {currentEvent.matches
@@ -262,7 +206,6 @@ export default function SchedulePage() {
               </div>
             </div>
           )}
-
         </div>
       )}
     </div>
