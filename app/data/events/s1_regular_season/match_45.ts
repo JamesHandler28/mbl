@@ -1,0 +1,19 @@
+// match_45.ts — Week 6, blue vs orange
+// Fill in winner/score/videoUrl and each team's stats once this match is played.
+// Leave winner as null and stats as empty objects until then.
+
+import { MatchWithLogs } from '../_matchType';
+
+export const MATCH_45: MatchWithLogs = {
+  id: "s1-w6-m5",
+  round: "Week 6",
+  team1: "blue",
+  team2: "orange",
+  winner: null,       // set to "blue" or "orange" once played
+  score: "TBD",       // e.g. "6-4"
+  videoUrl: undefined, // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
+  logs: {
+    blue: { result: "LOSS", gamesCount: 1, stats: {} },
+    orange: { result: "LOSS", gamesCount: 1, stats: {} },
+  }
+};
