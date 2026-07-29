@@ -77,7 +77,7 @@ export const STATIC_TEAMS: Team[] = [
     color: "border-blue-500",
     shadow: "shadow-blue-500/50",
     players: [
-      { name: "Warhead", role: "Captain", image: "Warhead.png", weaponImage: "Warhead.png",
+      { name: "Rogue Warhead", role: "Captain", image: "Rogue_Warhead.png", weaponImage: "Warhead.png",
         attributes: { accuracy: 1.0, patience: 183, meleeBias: 0.37, strafeRate: 0.16, aggression: 336, packAffinity: 0.42 } },
       { name: "Underworld Scythe", role: "Member", image: "Underworld_Scythe.png", weaponImage: "UnderworldScythe.png",
         attributes: { accuracy: 0.65, patience: 189, meleeBias: 0.68, strafeRate: 0.2, aggression: 329, packAffinity: 0.36 } },
@@ -113,7 +113,7 @@ export const STATIC_TEAMS: Team[] = [
     players: [
       { name: "Icey Staff", role: "Captain", image: "Icey_Staff.png", weaponImage: "LostIceyStaff.png",
         attributes: { accuracy: 0.78, patience: 190, meleeBias: 0.66, strafeRate: 0.85, aggression: 614, packAffinity: 0.67 } },
-      { name: "Ice Blade", role: "Member", image: "Ice_Blade.png", weaponImage: "IceBlade.png",
+      { name: "Frost Blade", role: "Member", image: "Frost_Blade.png", weaponImage: "IceBlade.png",
         attributes: { accuracy: 0.56, patience: 104, meleeBias: 0.52, strafeRate: 0.78, aggression: 131, packAffinity: 0.63 } },
       { name: "Blood Blade", role: "Member", image: "Blood_Blade.png", weaponImage: "BloodBlade2.png",
         attributes: { accuracy: 0.8, patience: 182, meleeBias: 0.22, strafeRate: 0.38, aggression: 215, packAffinity: 0.5 } },
@@ -142,8 +142,8 @@ export const STATIC_TEAMS: Team[] = [
   {
     id: "black",
     name: "Black",
-    color: "border-gray-400",
-    shadow: "shadow-gray-400/50",
+    color: "border-gray-600",
+    shadow: "shadow-gray-600/50",
     players: [
       { name: "Galactic Sword", role: "Captain", image: "Galactic_Sword.png", weaponImage: "GalacticSword.png",
         attributes: { accuracy: 0.77, patience: 178, meleeBias: 0.34, strafeRate: 0.41, aggression: 568, packAffinity: 0.18 } },

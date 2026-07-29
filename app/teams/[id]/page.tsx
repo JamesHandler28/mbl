@@ -3,11 +3,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { teamsData, leagueHistory, slugify, computeEffectiveOVR, normalizeStat } from '../../data';
 
-// Helper: FIFA-card stat cell (3-letter abbreviation + big number)
-const FifaStat = ({ label, value }: { label: string, value: number }) => (
-  <div className="flex items-center gap-2">
-    <span className="font-sans font-black text-lg md:text-xl text-white w-8 text-right">{value}</span>
-    <span className="font-sans font-bold text-[10px] text-slate-400 uppercase tracking-widest">{label}</span>
+const FifaStat = ({ label, value }: { label: string; value: number }) => (
+  <div className="flex items-center justify-between text-xs py-0.5">
+    <span className="font-sans font-bold text-slate-300 uppercase tracking-wide">
+      {label}
+    </span>
+    <span className="font-sans font-black text-white">{value}</span>
   </div>
 );
 
@@ -145,11 +146,10 @@ export default async function TeamDetailPage({ params }: { params: Promise<{ id:
 
                 {/* AVATAR */}
                 <div className={`
-                  w-20 h-20 rounded-full mt-6 mb-3 flex items-center justify-center overflow-hidden relative
-                  ${player.isCaptain ? '' : 'bg-slate-800'}
+                  w-28 h-28 rounded-2xl mt-0 mb-3 flex items-center justify-center overflow-hidden relative
                 `}>
                   {player.image ? (
-                    <Image src={`/players/${player.image}`} alt={player.name} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
+                    <Image src={`/players/${player.image}`} alt={player.name} fill className="object-contain group-hover:scale-110 transition-transform duration-500" />
                   ) : (
                     <span className="font-sans font-black text-slate-500 text-2xl">{player.name.charAt(0)}</span>
                   )}
@@ -183,13 +183,13 @@ export default async function TeamDetailPage({ params }: { params: Promise<{ id:
 
                 {/* FIFA-STYLE STAT GRID: 2 columns x 3 rows */}
                 {player.attributes && (
-                  <div className="w-full grid grid-cols-2 gap-x-2 gap-y-1.5 bg-black/30 p-3 rounded-lg border border-white/5 backdrop-blur-sm">
-                    <FifaStat label="ACC" value={acc} />
-                    <FifaStat label="STR" value={str} />
-                    <FifaStat label="PAT" value={pat} />
-                    <FifaStat label="AGG" value={agg} />
-                    <FifaStat label="MEL" value={mel} />
-                    <FifaStat label="PCK" value={pck} />
+                  <div className="w-full space-y-1.5 bg-black/30 p-3 rounded-lg border border-white/5 backdrop-blur-sm">
+                    <FifaStat label="Accuracy" value={acc} />
+                    <FifaStat label="Patience" value={pat} />
+                    <FifaStat label="Melee Bias" value={mel} />
+                    <FifaStat label="Strafe Rate" value={str} />
+                    <FifaStat label="Aggression" value={agg} />
+                    <FifaStat label="Pack Affinity" value={pck} />
                   </div>
                 )}
               </div>

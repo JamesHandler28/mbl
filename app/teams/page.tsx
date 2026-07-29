@@ -123,7 +123,11 @@ export default function TeamsPage() {
                           {player.name}
                         </div>
                       </div>
-                      {index === 0 && <span className="text-sm animate-pulse">👑</span>}
+                      {index === 0 && (
+                        <span className="text-[9px] font-sans font-bold bg-mbl-yellow text-mbl-darkblue w-4 h-4 flex items-center justify-center rounded-full">
+                          C
+                        </span>
+                      )}
                     </div>
                   ))}
                 </div>

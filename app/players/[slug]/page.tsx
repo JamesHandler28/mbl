@@ -3,12 +3,119 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { teamsData, findPlayerBySlug, computeEffectiveOVR, normalizeStat } from '../../data';
 
-const FifaStat = ({ label, value }: { label: string; value: number }) => (
-  <div className="flex items-center gap-2">
-    <span className="font-sans font-black text-xl md:text-2xl text-white w-9 text-right">{value}</span>
-    <span className="font-sans font-bold text-[11px] text-slate-400 uppercase tracking-widest">{label}</span>
+const FifaStat = ({ label, value, tooltip }: { label: string; value: number; tooltip: string }) => (
+  <div className="relative group flex items-center justify-between text-sm py-1">
+    <span className="font-sans font-bold text-slate-300 uppercase tracking-wide border-b border-dotted border-white/20 cursor-help">
+      {label}
+    </span>
+    <span className="font-sans font-black text-white text-base">{value}</span>
+
+    <div className="absolute bottom-full left-0 mb-2 w-56 p-3 bg-slate-800 text-slate-200 text-[11px] font-mono normal-case leading-tight rounded border border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.5)] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+      {tooltip}
+    </div>
   </div>
 );
+
+// --- RADAR CHART (plain SVG, no external chart library needed) ---
+const RadarChart = ({ stats }: { stats: { label: string; value: number }[] }) => {
+  const size = 280;
+  const center = size / 2;
+  const maxRadius = size / 2 - 40; // leave room for axis labels
+  const levels = 4; // concentric rings
+
+  const angleStep = (Math.PI * 2) / stats.length;
+  // Start pointing straight up, then go clockwise
+  const pointFor = (value: number, index: number) => {
+    const angle = index * angleStep - Math.PI / 2;
+    const r = (value / 100) * maxRadius;
+    return {
+      x: center + r * Math.cos(angle),
+      y: center + r * Math.sin(angle),
+    };
+  };
+
+  const dataPoints = stats.map((s, i) => pointFor(s.value, i));
+  const dataPath = dataPoints.map(p => `${p.x},${p.y}`).join(' ');
+
+  const labelPoints = stats.map((s, i) => {
+    const angle = i * angleStep - Math.PI / 2;
+    const r = maxRadius + 22;
+    return {
+      x: center + r * Math.cos(angle),
+      y: center + r * Math.sin(angle),
+      label: s.label,
+      value: s.value,
+    };
+  });
+
+  return (
+    <svg width={size} height={size} className="mx-auto">
+      {/* Concentric grid rings */}
+      {Array.from({ length: levels }).map((_, ringIndex) => {
+        const ringRadius = maxRadius * ((ringIndex + 1) / levels);
+        const ringPoints = stats.map((_, i) => {
+          const angle = i * angleStep - Math.PI / 2;
+          return `${center + ringRadius * Math.cos(angle)},${center + ringRadius * Math.sin(angle)}`;
+        }).join(' ');
+        return (
+          <polygon
+            key={ringIndex}
+            points={ringPoints}
+            fill="none"
+            stroke="rgba(255,255,255,0.08)"
+            strokeWidth={1}
+          />
+        );
+      })}
+
+      {/* Axis spokes */}
+      {stats.map((_, i) => {
+        const angle = i * angleStep - Math.PI / 2;
+        const x = center + maxRadius * Math.cos(angle);
+        const y = center + maxRadius * Math.sin(angle);
+        return (
+          <line
+            key={i}
+            x1={center}
+            y1={center}
+            x2={x}
+            y2={y}
+            stroke="rgba(255,255,255,0.12)"
+            strokeWidth={1}
+          />
+        );
+      })}
+
+      {/* Data shape */}
+      <polygon
+        points={dataPath}
+        fill="rgba(76,159,159,0.35)"
+        stroke="#4c9f9f"
+        strokeWidth={2}
+      />
+      {dataPoints.map((p, i) => (
+        <circle key={i} cx={p.x} cy={p.y} r={3} fill="#4c9f9f" />
+      ))}
+
+      {/* Axis labels */}
+      {labelPoints.map((p, i) => (
+        <text
+          key={i}
+          x={p.x}
+          y={p.y}
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fontSize={10}
+          fontWeight={700}
+          fill="#cbd5e1"
+          className="font-sans uppercase"
+        >
+          {p.label}
+        </text>
+      ))}
+    </svg>
+  );
+};
 
 const getCombatScore = (p: any) => (p.kills || 0) * 10 + (p.assists || 0) * 5 - (p.deaths || 0) * 3;
 
@@ -26,7 +133,6 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ s
 
   const { player, team } = found;
 
-  // Global rank (same combat-score ranking used on the team page)
   const allPlayers = teamsData.flatMap(t => t.players.map(p => ({ name: p.name, score: getCombatScore(p) })));
   allPlayers.sort((a, b) => b.score - a.score);
   const rank = allPlayers.findIndex(p => p.name === player.name) + 1;
@@ -40,6 +146,15 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ s
   const pck = normalizeStat(player.attributes?.packAffinity ?? 0, 1);
   const ovr = computeEffectiveOVR(player);
 
+  const radarStats = [
+    { label: "ACC", value: acc },
+    { label: "STR", value: str },
+    { label: "PAT", value: pat },
+    { label: "AGG", value: agg },
+    { label: "MEL", value: mel },
+    { label: "PCK", value: pck },
+  ];
+
   const winRate = player.gamesPlayed && player.gamesPlayed > 0
     ? ((player.wins! / player.gamesPlayed) * 100).toFixed(1) + "%"
     : "0.0%";
@@ -49,7 +164,6 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ s
 
   return (
     <div className="min-h-screen p-4 md:p-8 pb-20 pt-24 md:pt-28 font-sans text-slate-200">
-      {/* BACK NAV */}
       <div className="max-w-4xl mx-auto mb-6">
         <Link href={`/teams/${team.id}`} className="text-slate-400 hover:text-white text-xs font-sans font-bold uppercase tracking-widest transition-colors">
           ← Back to {team.name}
@@ -91,18 +205,25 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ s
             {player.role}
           </span>
 
-          <div className="w-full grid grid-cols-2 gap-x-3 gap-y-2 bg-black/30 p-4 rounded-lg border border-white/5">
-            <FifaStat label="ACC" value={acc} />
-            <FifaStat label="STR" value={str} />
-            <FifaStat label="PAT" value={pat} />
-            <FifaStat label="AGG" value={agg} />
-            <FifaStat label="MEL" value={mel} />
-            <FifaStat label="PCK" value={pck} />
+          <div className="w-full space-y-1.5 bg-black/30 p-3 rounded-lg border border-white/5">
+            <FifaStat label="Accuracy" value={acc} tooltip="How precisely this bot's thrown weapons land on target. Higher means less random spread." />
+            <FifaStat label="Patience" value={pat} tooltip="How long this bot keeps chasing a target after losing direct line of sight before giving up." />
+            <FifaStat label="Melee Bias" value={mel} tooltip="How much this bot prefers stabbing over throwing its weapon when both options are available." />
+            <FifaStat label="Strafe Rate" value={str} tooltip="How often this bot changes direction while circling an enemy, rather than holding a steady path." />
+            <FifaStat label="Aggression" value={agg} tooltip="Preferred engagement distance. Low means it wants to be right on top of enemies; high means it prefers to fight from range." />
+            <FifaStat label="Pack Affinity" value={pck} tooltip="How strongly this bot sticks close to living teammates when no enemy is currently visible." />
           </div>
         </div>
 
-        {/* --- SEASON STATS --- */}
+        {/* --- RIGHT COLUMN: radar chart + season stats --- */}
         <div className="flex flex-col gap-4">
+          <div className="bg-slate-900 border border-white/10 rounded-2xl p-6">
+            <h2 className="font-sans font-black uppercase text-lg text-white mb-2 tracking-wide border-b border-white/10 pb-2">
+              Attribute Radar
+            </h2>
+            <RadarChart stats={radarStats} />
+          </div>
+
           <div className="bg-slate-900 border border-white/10 rounded-2xl p-6">
             <h2 className="font-sans font-black uppercase text-lg text-white mb-4 tracking-wide border-b border-white/10 pb-2">
               Season Stats
