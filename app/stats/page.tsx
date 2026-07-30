@@ -238,8 +238,8 @@ export default function StatsPage() {
                   {/* Sticky Name Cell */}
                   <td className="p-3 md:p-4 font-bold text-white sticky left-[60px] bg-slate-900 group-hover:bg-slate-800 transition-colors z-10 border-r border-white/5 shadow-[2px_0_5px_rgba(0,0,0,0.5)]">
                     <Link href={`/players/${slugify(player.name)}`} className="flex items-center gap-3 hover:text-mbl-yellow transition-colors">
-                      <div className="w-8 h-8 rounded-full bg-slate-700 overflow-hidden border border-white/10 group-hover:border-mbl-yellow transition-colors shrink-0">
-                         {player.image && <img src={`/players/${player.image}`} alt={player.name} className="w-full h-full object-cover" />}
+                      <div className="w-8 h-8 rounded-full bg-slate-700 overflow-hidden border border-white/10 group-hover:border-mbl-yellow transition-colors shrink-0 flex items-center justify-center">
+                        {player.image && <img src={`/players/${player.image}`} alt={player.name} className="w-full h-auto object-contain translate-y-[20.6%]" />}
                       </div>
                       {player.name}
                     </Link>

@@ -149,7 +149,7 @@ export default async function TeamDetailPage({ params }: { params: Promise<{ id:
                   w-28 h-28 rounded-2xl mt-0 mb-3 flex items-center justify-center overflow-hidden relative
                 `}>
                   {player.image ? (
-                    <Image src={`/players/${player.image}`} alt={player.name} fill className="object-contain group-hover:scale-110 transition-transform duration-500" />
+                    <Image src={`/players/${player.image}`} alt={player.name} fill className="object-contain translate-y-[20.6%] group-hover:scale-110 transition-transform duration-500" />
                   ) : (
                     <span className="font-sans font-black text-slate-500 text-2xl">{player.name.charAt(0)}</span>
                   )}

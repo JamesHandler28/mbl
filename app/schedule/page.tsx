@@ -18,8 +18,8 @@ const MatchCard = ({ match }: { match: Match }) => {
 
   const TeamRow = ({ info, isWinner }: { info: ReturnType<typeof getTeamInfo>, isWinner: boolean }) => (
     <div className={`flex items-center gap-2 p-2 rounded-lg transition-colors ${isWinner ? 'bg-mbl-yellow/10' : ''}`}>
-      <div className={`w-8 h-8 rounded-full border-2 ${info.color} bg-black overflow-hidden shrink-0 relative`}>
-        {info.image && <Image src={`/players/${info.image}`} alt={info.name} fill className="object-cover" />}
+      <div className={`w-8 h-8 rounded-full border-2 ${info.color} bg-black overflow-hidden shrink-0 relative flex items-center justify-center`}>
+        {info.image && <Image src={`/players/${info.image}`} alt={info.name} width={32} height={30} className="object-contain translate-y-[20.6%]" />}
       </div>
       <span className={`font-sans font-bold text-sm truncate ${isWinner ? 'text-mbl-yellow' : 'text-slate-300'}`}>
         {info.name}
@@ -132,8 +132,8 @@ export default function SchedulePage() {
                         <div className="text-[10px] text-mbl-pink uppercase font-header font-bold tracking-widest mb-1">Champion</div>
                         <div className="flex items-center gap-3 justify-center md:justify-end">
                             <span className="font-header font-bold text-white text-xl">{champion.name}</span>
-                            <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full border-2 ${champion.color} bg-black overflow-hidden shrink-0`}>
-                            {champion.image && <Image src={`/players/${champion.image}`} alt="Champ" width={48} height={48} className="object-cover w-full h-full" />}
+                            <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full border-2 ${champion.color} bg-black overflow-hidden shrink-0 flex items-center justify-center`}>
+                            {champion.image && <Image src={`/players/${champion.image}`} alt="Champ" width={48} height={45} className="object-contain translate-y-[20.6%]" />}
                             </div>
                         </div>
                         </div>

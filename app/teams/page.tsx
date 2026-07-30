@@ -106,10 +106,10 @@ export default function TeamsPage() {
                         : 'bg-transparent border-transparent hover:bg-white/5'
                       }
                     `}>
-                      <div className="w-7 h-7 rounded-full overflow-hidden bg-black/50 relative border border-white/10 shrink-0">
-                          {player.image ? (
-                            <Image src={`/players/${player.image}`} alt={player.name} fill className="object-cover" />
-                          ) : (
+                      <div className="w-7 h-7 rounded-full overflow-hidden bg-black/50 relative border border-white/10 shrink-0 flex items-center justify-center">
+                        {player.image ? (
+                          <Image src={`/players/${player.image}`} alt={player.name} width={28} height={26} className="object-contain translate-y-[20.6%]" />
+                        ) : (
                             <div className="w-full h-full flex items-center justify-center text-xs text-gray-500 font-bold">{player.name[0]}</div>
                           )}
                       </div>

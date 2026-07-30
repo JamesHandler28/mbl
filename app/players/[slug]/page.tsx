@@ -183,9 +183,9 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ s
             #{rank}
           </div>
 
-          <div className="w-32 h-32 rounded-full mt-10 mb-4 overflow-hidden relative border border-white/10">
+          <div className="w-32 h-32 rounded-full mt-10 mb-4 overflow-hidden relative border border-white/10 flex items-center justify-center">
             {player.image ? (
-              <Image src={`/players/${player.image}`} alt={player.name} fill className="object-cover" />
+              <Image src={`/players/${player.image}`} alt={player.name} width={128} height={121} className="object-contain translate-y-[20.6%]" />
             ) : (
               <div className="w-full h-full flex items-center justify-center bg-slate-800 font-sans font-black text-slate-500 text-4xl">
                 {player.name.charAt(0)}
