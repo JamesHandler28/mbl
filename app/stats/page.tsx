@@ -16,7 +16,7 @@ const SortIcon = ({ active, direction }: { active: boolean, direction: 'asc' | '
 export default function StatsPage() {
   
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' }>({ 
-    key: 'ovr', 
+    key: 'score', 
     direction: 'desc' 
   });
 

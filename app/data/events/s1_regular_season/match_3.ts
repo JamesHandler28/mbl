@@ -11,7 +11,7 @@ export const MATCH_3: MatchWithLogs = {
   team2: "blue",
   winner: "blue",       // set to "green" or "blue" once played
   score: "0-4",       // e.g. "6-4"
-  videoUrl: undefined, // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
+  videoUrl: "https://youtube.com/shorts/D1TfdC0pZBU?feature=share", // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
   logs: {
     green: { result: "LOSS", gamesCount: 1, stats: {
         "Whale Saber": [0, 1, 0, 6],

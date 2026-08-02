@@ -11,7 +11,7 @@ export const MATCH_5: MatchWithLogs = {
   team2: "black",
   winner: "black",       // set to "orange" or "black" once played
   score: "3-4",       // e.g. "6-4"
-  videoUrl: undefined, // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
+  videoUrl: "https://youtube.com/shorts/Cw4n_DyuHp8?feature=share", // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
   logs: {
     orange: { result: "LOSS", gamesCount: 1, stats: {
         "Iron Katana": [1, 1, 0, 12],
