@@ -11,7 +11,7 @@ export const MATCH_14: MatchWithLogs = {
   team2: "orange",
   winner: "orange",       // set to "blue" or "orange" once played
   score: "3-4",       // e.g. "6-4"
-  videoUrl: undefined, // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
+  videoUrl: "https://youtube.com/shorts/AjeVIAc5VT0?feature=share", // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
   logs: {
     blue: { result: "LOSS", gamesCount: 1, stats: {
         "Rogue Warhead": [1, 1, 1, 12],
