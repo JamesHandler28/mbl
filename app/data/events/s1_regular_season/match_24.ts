@@ -11,7 +11,7 @@ export const MATCH_24: MatchWithLogs = {
   team2: "yellow",
   winner: "black",       // set to "black" or "yellow" once played
   score: "4-3",       // e.g. "6-4"
-  videoUrl: undefined, // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
+  videoUrl: "https://youtube.com/shorts/3Yv3A2bqKFU?feature=share", // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
   logs: {
     black: { result: "WIN", gamesCount: 1, stats: {
         "Galactic Sword": [2, 0, 0, 22],

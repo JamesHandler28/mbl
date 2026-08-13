@@ -11,7 +11,7 @@ export const MATCH_22: MatchWithLogs = {
   team2: "blue",
   winner: "yellow",       // set to "yellow" or "blue" once played
   score: "4-3",       // e.g. "6-4"
-  videoUrl: undefined, // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
+  videoUrl: "https://youtube.com/shorts/XoZScks_s9s?feature=share", // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
   logs: {
     yellow: { result: "WIN", gamesCount: 1, stats: {
         "Icey Staff": [3, 0, 0, 33],

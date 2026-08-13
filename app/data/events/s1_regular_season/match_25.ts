@@ -9,11 +9,21 @@ export const MATCH_25: MatchWithLogs = {
   round: "Week 4",
   team1: "red",
   team2: "yellow",
-  winner: null,       // set to "red" or "yellow" once played
-  score: "TBD",       // e.g. "6-4"
-  videoUrl: undefined, // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
+  winner: "red",       // set to "red" or "yellow" once played
+  score: "4-2",       // e.g. "6-4"
+  videoUrl: "https://youtube.com/shorts/VGxU3TIvrVM?feature=share", // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
   logs: {
-    red: { result: "LOSS", gamesCount: 1, stats: {} },
-    yellow: { result: "LOSS", gamesCount: 1, stats: {} },
+    red: { result: "WIN", gamesCount: 1, stats: {
+        "Pinetree Lance": [0, 0, 2, 10],
+        "Mastermind Staff": [1, 1, 1, 22],
+        "Candy Hammer": [3, 0, 0, 18],
+        "Lightning Jitte": [0, 1, 1, 1],
+    } },
+    yellow: { result: "LOSS", gamesCount: 1, stats: {
+        "Icey Staff": [0, 1, 0, 0],
+        "Frost Blade": [1, 1, 0, 6],
+        "Blood Blade": [0, 1, 0, 2],
+        "Z Hammer": [1, 1, 1, 17],
+    } },
   }
 };

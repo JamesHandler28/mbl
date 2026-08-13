@@ -9,11 +9,21 @@ export const MATCH_37: MatchWithLogs = {
   round: "Week 5",
   team1: "blue",
   team2: "black",
-  winner: null,       // set to "blue" or "black" once played
-  score: "TBD",       // e.g. "6-4"
-  videoUrl: undefined, // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
+  winner: "blue",       // set to "blue" or "black" once played
+  score: "4-3",       // e.g. "6-4"
+  videoUrl: "https://youtube.com/shorts/5ze0U3nM3Hc?feature=share", // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
   logs: {
-    blue: { result: "LOSS", gamesCount: 1, stats: {} },
-    black: { result: "LOSS", gamesCount: 1, stats: {} },
+    blue: { result: "WIN", gamesCount: 1, stats: {
+        "Rogue Warhead": [1, 1, 1, 12],
+        "Underworld Scythe": [1, 1, 0, 6],
+        "Eye Scepter": [1, 0, 0, 6],
+        "Zombie Arm": [1, 1, 3, 22],
+    } },
+    black: { result: "LOSS", gamesCount: 1, stats: {
+        "Galactic Sword": [0, 1, 1, 6],
+        "Melony Smasher": [0, 1, 1, 6],
+        "Golden Razor": [0, 1, 1, 1],
+        "Frozen Khopesh": [3, 1, 0, 24],
+    } },
   }
 };
