@@ -9,11 +9,21 @@ export const MATCH_42: MatchWithLogs = {
   round: "Week 6",
   team1: "pink",
   team2: "orange",
-  winner: null,       // set to "pink" or "orange" once played
-  score: "TBD",       // e.g. "6-4"
-  videoUrl: undefined, // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
+  winner: "pink",       // set to "pink" or "orange" once played
+  score: "4-2",       // e.g. "6-4"
+  videoUrl: "https://youtube.com/shorts/fW4BJ2P3Jas?feature=share", // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
   logs: {
-    pink: { result: "LOSS", gamesCount: 1, stats: {} },
-    orange: { result: "LOSS", gamesCount: 1, stats: {} },
+    pink: { result: "WIN", gamesCount: 1, stats: {
+        "Chaos Scythe": [0, 1, 1, 9],
+        "Cursed Cutlass": [3, 0, 0, 18],
+        "Snow Shovel": [1, 0, 2, 15],
+        "Spiderweb Wand": [0, 1, 2, 9],
+    } },
+    orange: { result: "LOSS", gamesCount: 1, stats: {
+        "Iron Katana": [0, 1, 1, 6],
+        "Crow Scythe": [1, 1, 1, 15],
+        "Venom Scythe": [1, 1, 0, 12],
+        "Laser Dagger": [0, 1, 0, 0],
+    } },
   }
 };
