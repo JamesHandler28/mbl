@@ -115,20 +115,24 @@ function NavLinks({ mobile = false, onClick }: { mobile?: boolean, onClick?: () 
 
     return (
         <>
+            <Link href="/games" className={baseClass} onClick={onClick}>
+                GAMES
+            </Link>
+
+            <Link href="/news" className={baseClass} onClick={onClick}>
+                NEWS
+            </Link>
+
             <Link href="/teams" className={baseClass} onClick={onClick}>
                 TEAMS
             </Link>
-            
-            <Link href="/schedule" className={baseClass} onClick={onClick}>
-                SCHEDULE
-            </Link>
-            
+
             <Link href="/stats" className={baseClass} onClick={onClick}>
                 STATS
             </Link>
 
-            <Link href="/videos" className={videoClass} onClick={onClick}>
-                VIDEOS
+            <Link href="/watch" className={videoClass} onClick={onClick}>
+                WATCH
             </Link>
         </>
     )

@@ -108,7 +108,7 @@ export default async function MatchDetailPage({ params }: { params: Promise<{ ma
       <div className="max-w-4xl mx-auto">
 
         {/* BACK NAV */}
-        <Link href="/schedule" className="text-slate-400 hover:text-white text-xs font-sans font-bold uppercase tracking-widest transition-colors">
+        <Link href="/games" className="text-slate-400 hover:text-white text-xs font-sans font-bold uppercase tracking-widest transition-colors">
           ← Back to Schedule
         </Link>
 

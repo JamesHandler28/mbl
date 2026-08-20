@@ -14,6 +14,7 @@ export const S1_PLAYOFFS_INFO = {
   id: "s1-playoffs",
   name: "Playoffs",
   championId: null, // set to the Final's winning team id once it's been played
+  completed: false,
 };
 
 export const S1_PLAYOFFS_BRACKET = ALL_MATCHES.map(m => ({

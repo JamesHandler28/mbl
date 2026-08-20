@@ -71,6 +71,7 @@ export const S1_REGULAR_SEASON_INFO = {
   id: "s1-regular-season",
   name: "Regular Season",
   championId: null,
+  completed: true,
 };
 
 export const S1_REGULAR_SEASON_BRACKET = ALL_MATCHES.map(m => ({

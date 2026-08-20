@@ -6,8 +6,8 @@ import { MatchWithLogs } from '../_matchType';
 export const MATCH_2: MatchWithLogs = {
   id: "s1-po-sf2",
   round: "Semifinals",
-  team1: "seed-2",
-  team2: "seed-3",
+  team1: "green",
+  team2: "blue",
   winner: null,
   score: "TBD",
   videoUrl: undefined,

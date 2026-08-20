@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MBL News — Week 7 — Regular Season Finale</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@700;900&family=Inter:wght@400;500;600&display=swap');
+
+  :root {
+    --navy-dark: #10202c;
+    --teal: #2a9d8f;
+    --gold: #f4c542;
+    --text-dim: #7f93a3;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* FIXED DESIGN CANVAS — 1600x900. This is deliberately NOT responsive;
+     the page embedding this graphic scales the whole iframe uniformly
+     to fit, so every proportion here stays exactly as designed no
+     matter how small the final display size is. */
+  .canvas {
+    width: 1600px;
+    height: 900px;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #1c3347 0%, var(--navy-dark) 100%);
+    color: #eef4f8;
+    display: flex;
+    align-items: center;
+    padding: 0 90px;
+    gap: 90px;
+  }
+
+  .hero {
+    flex: 0 0 46%;
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+
+  .hero-portrait {
+    flex: 0 0 auto;
+    width: 190px;
+    aspect-ratio: 400 / 377;
+    height: auto;
+    object-fit: contain;
+    transform: translateY(20.6%);
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4));
+  }
+
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .eyebrow {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin: 0 0 14px;
+  }
+
+  .hero-number {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 900;
+    font-size: 76px;
+    line-height: 1.05;
+    color: var(--gold);
+    margin: 0;
+  }
+
+  .hero-caption {
+    font-size: 21px;
+    color: #cbd5e1;
+    margin-top: 18px;
+    max-width: 440px;
+    line-height: 1.4;
+  }
+
+  .hero-caption b {
+    color: #ffffff;
+  }
+
+  .divider {
+    width: 1px;
+    align-self: stretch;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .board {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .board-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+
+  .board-label {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .score-label {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .row:last-child { border-bottom: none; }
+
+  .rank {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 900;
+    font-size: 26px;
+    color: var(--text-dim);
+    width: 40px;
+  }
+
+  .row.first .rank { color: var(--gold); }
+
+  .portrait {
+    width: 60px;
+    aspect-ratio: 400 / 377;
+    height: auto;
+    object-fit: contain;
+    transform: translateY(20.6%);
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35));
+    margin-right: 18px;
+    flex-shrink: 0;
+  }
+
+  .info {
+    flex-grow: 1;
+  }
+
+  .name {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 700;
+    font-size: 25px;
+  }
+
+  .team {
+    font-size: 16px;
+    color: var(--text-dim);
+  }
+
+  .score {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 900;
+    font-size: 29px;
+    color: var(--teal);
+  }
+</style>
+</head>
+<body>
+
+  <div class="canvas">
+
+    <div class="hero">
+      <img class="hero-portrait" src="/players/Chaos_Scythe.png" alt="Chaos Scythe">
+      <div class="hero-text">
+        <p class="eyebrow">Week 7 · Final Week Steal</p>
+        <p class="hero-number">Pink 4 - 3 Green</p>
+        <p class="hero-caption"><b>Pink</b> beats Green head-to-head in the final week of the regular season to steal the #1 seed away from them.</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="board">
+      <div class="board-header">
+        <p class="board-label">Final Top 3 · Season</p>
+        <p class="score-label">Combat Score</p>
+      </div>
+      <div class="row first">
+        <div class="rank">1</div>
+        <img class="portrait" src="/players/Whale_Saber.png" alt="Whale Saber">
+        <div class="info">
+          <div class="name">Whale Saber</div>
+          <div class="team">Green</div>
+        </div>
+        <div class="score">187</div>
+      </div>
+      <div class="row">
+        <div class="rank">2</div>
+        <img class="portrait" src="/players/Rogue_Warhead.png" alt="Rogue Warhead">
+        <div class="info">
+          <div class="name">Rogue Warhead</div>
+          <div class="team">Blue</div>
+        </div>
+        <div class="score">185</div>
+      </div>
+      <div class="row">
+        <div class="rank">3</div>
+        <img class="portrait" src="/players/Chaos_Scythe.png" alt="Chaos Scythe">
+        <div class="info">
+          <div class="name">Chaos Scythe</div>
+          <div class="team">Pink</div>
+        </div>
+        <div class="score">180</div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

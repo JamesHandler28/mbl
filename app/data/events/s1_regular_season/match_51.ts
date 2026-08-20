@@ -9,11 +9,21 @@ export const MATCH_51: MatchWithLogs = {
   round: "Week 7",
   team1: "orange",
   team2: "yellow",
-  winner: null,       // set to "orange" or "yellow" once played
-  score: "TBD",       // e.g. "6-4"
+  winner: "yellow",       // set to "orange" or "yellow" once played
+  score: "3-4",       // e.g. "6-4"
   videoUrl: undefined, // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
   logs: {
-    orange: { result: "LOSS", gamesCount: 1, stats: {} },
-    yellow: { result: "LOSS", gamesCount: 1, stats: {} },
+    orange: { result: "LOSS", gamesCount: 1, stats: {
+        "Iron Katana": [2, 1, 0, 14],
+        "Crow Scythe": [0, 1, 1, 6],
+        "Venom Scythe": [0, 1, 1, 8],
+        "Laser Dagger": [1, 1, 1, 6],
+    } },
+    yellow: { result: "WIN", gamesCount: 1, stats: {
+        "Icey Staff": [1, 1, 1, 13],
+        "Frost Blade": [1, 0, 0, 3],
+        "Blood Blade": [1, 1, 1, 21],
+        "Z Hammer": [1, 1, 0, 10],
+    } },
   }
 };

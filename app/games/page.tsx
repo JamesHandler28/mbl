@@ -141,6 +141,10 @@ export default function SchedulePage() {
                         <span className="bg-slate-800 text-slate-400 px-3 py-1 rounded text-xs font-header font-bold border border-slate-600">
                         UPCOMING
                         </span>
+                    ) : event.completed ? (
+                        <span className="bg-slate-700 text-slate-300 px-3 py-1 rounded text-xs font-header font-bold border border-slate-500">
+                        COMPLETED
+                        </span>
                     ) : (
                         <span className="bg-mbl-teal/20 text-mbl-teal px-3 py-1 rounded text-xs font-header font-bold border border-mbl-teal/50">
                         ACTIVE

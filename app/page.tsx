@@ -49,7 +49,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-white/30 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
           </Link>
           
-          <Link href="/schedule" className="group relative border-4 border-mbl-pink text-white font-header font-black text-lg md:text-xl px-8 py-3 md:px-12 md:py-4 rounded-xl overflow-hidden transition-transform hover:-translate-y-1 shadow-lg shadow-mbl-pink/20 hover:bg-mbl-pink">
+          <Link href="/games" className="group relative border-4 border-mbl-pink text-white font-header font-black text-lg md:text-xl px-8 py-3 md:px-12 md:py-4 rounded-xl overflow-hidden transition-transform hover:-translate-y-1 shadow-lg shadow-mbl-pink/20 hover:bg-mbl-pink">
             <span className="relative z-10">MATCH RESULTS</span>
           </Link>
         </div>

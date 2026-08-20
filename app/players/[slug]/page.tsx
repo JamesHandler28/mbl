@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { teamsData, findPlayerBySlug, computeEffectiveOVR, normalizeStat, ALL_MATCH_LOGS, leagueHistory } from '../../data';
+import { teamsData, findPlayerBySlug, computeEffectiveOVR, computePerformanceRating, normalizeStat, ALL_MATCH_LOGS, leagueHistory } from '../../data';
 
 const FifaStat = ({ label, value, tooltip }: { label: string; value: number; tooltip: string }) => (
   <div className="relative group flex items-center justify-between text-sm py-1">
@@ -170,6 +170,8 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ s
   const agg = normalizeStat(player.attributes?.aggression ?? 0, 800);
   const pck = normalizeStat(player.attributes?.packAffinity ?? 0, 1);
   const ovr = computeEffectiveOVR(player);
+  const performance = computePerformanceRating(player);
+  const performanceDelta = performance === null ? null : performance - ovr;
 
   const radarStats = [
     { label: "ACC", value: acc },
@@ -257,6 +259,21 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ s
                 Season Stats
               </h2>
               <div className="grid grid-cols-3 gap-4">
+                <div className="text-center">
+                  <div className="text-[10px] text-slate-500 font-sans font-bold uppercase">Preseason OVR</div>
+                  <div className="font-sans font-black text-2xl text-mbl-yellow">{ovr}</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-[10px] text-slate-500 font-sans font-bold uppercase">Performance</div>
+                  <div className="font-sans font-black text-2xl text-mbl-yellow">
+                    {performance === null ? "—" : performance}
+                  </div>
+                  {performanceDelta !== null && (
+                    <div className={`text-[10px] font-sans font-bold ${performanceDelta > 0 ? 'text-green-400' : performanceDelta < 0 ? 'text-mbl-pink' : 'text-slate-500'}`}>
+                      {performanceDelta > 0 ? `+${performanceDelta}` : performanceDelta} vs OVR
+                    </div>
+                  )}
+                </div>
                 <div className="text-center">
                   <div className="text-[10px] text-slate-500 font-sans font-bold uppercase">Combat Score</div>
                   <div className="font-sans font-black text-2xl text-mbl-teal">{score}</div>

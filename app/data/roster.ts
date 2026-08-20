@@ -211,20 +211,29 @@ export function findPlayerBySlug(teams: Team[], slug: string): { player: Player;
   return null;
 }
 
-// --- OVR CALCULATION ---
-// Base OVR is purely attribute-driven (accuracy, patience, meleeBias,
-// strafeRate, aggression, packAffinity) — this is what a player's OVR
-// is BEFORE they've played enough games for real performance to matter.
+// --- OVR / PERFORMANCE ---
 //
-// Once a player has played enough games, their OVR gradually blends in
-// actual performance (win rate + combat score per game), so a bot that's
-// visibly over/under-performing its stats starts to reflect that — but
-// not before there's enough sample size for it to mean anything.
+// These are now two INDEPENDENT numbers instead of one blended figure:
 //
-// This is the SINGLE SOURCE OF TRUTH for OVR — every page (team page,
+// PRESEASON OVR (computeBaseOVR / computeEffectiveOVR) — purely
+// attribute-driven (accuracy, patience, meleeBias, strafeRate,
+// aggression, packAffinity). This is FIXED once the season starts and
+// never changes — it's "what we expected" from this bot.
+//
+// PERFORMANCE RATING (computePerformanceRating) — purely based on real
+// results (win rate + combat score per game), completely independent
+// of preseason attributes. This is "what's actually happening." Returns
+// null until a player has logged enough games for it to mean anything.
+//
+// The GAP between the two is the actual story: a bot performing well
+// above its preseason number is a real breakout, one performing well
+// below it is a real underperformer — not noise from a single blended
+// score quietly drifting.
+//
+// This is the SINGLE SOURCE OF TRUTH for both — every page (team page,
 // player page, stats leaderboard) should import and use these functions
-// rather than recalculating OVR locally, so the number is always
-// consistent no matter where it's shown.
+// rather than recalculating locally, so the numbers are always
+// consistent no matter where they're shown.
 
 export function normalizeStat(value: number, max: number): number {
   return Math.round(Math.min(100, Math.max(0, (value / max) * 100)));
@@ -241,26 +250,22 @@ export function computeBaseOVR(attributes?: Player['attributes']): number {
   return Math.round((acc + pat + mel + str + agg + pck) / 6);
 }
 
-// Games needed before performance starts influencing OVR at all, and
-// games needed before performance is fully "trusted" (max blend weight).
-const OVR_PERFORMANCE_MIN_GAMES = 5;
-const OVR_PERFORMANCE_FULL_TRUST_GAMES = 20;
-const OVR_MAX_PERFORMANCE_SWING = 15; // OVR can move at most +/-15 from pure attribute-based rating
-
+// OVR is now just the fixed preseason number — it no longer blends in
+// performance. Kept under this name so every page that already imports
+// computeEffectiveOVR doesn't need to change its import.
 export function computeEffectiveOVR(player: Player): number {
-  const baseOVR = computeBaseOVR(player.attributes);
+  return computeBaseOVR(player.attributes);
+}
+
+// Games needed before a Performance Rating is shown at all.
+const PERFORMANCE_MIN_GAMES = 5;
+
+// Real, independent performance rating — 0 to 100, centered at 50 for
+// an average (50% win rate, 0 combat score/game) performance. Returns
+// null if the player hasn't played enough games yet.
+export function computePerformanceRating(player: Player): number | null {
   const gamesPlayed = player.gamesPlayed || 0;
-
-  if (gamesPlayed < OVR_PERFORMANCE_MIN_GAMES) {
-    return baseOVR; // not enough sample size yet — pure attribute-based
-  }
-
-  // How much do we trust performance data? Scales from 0 at MIN_GAMES
-  // up to 1.0 at FULL_TRUST_GAMES.
-  const trust = Math.min(
-    1,
-    (gamesPlayed - OVR_PERFORMANCE_MIN_GAMES) / (OVR_PERFORMANCE_FULL_TRUST_GAMES - OVR_PERFORMANCE_MIN_GAMES)
-  );
+  if (gamesPlayed < PERFORMANCE_MIN_GAMES) return null;
 
   const winRate = (player.wins || 0) / gamesPlayed; // 0 to 1
   const combatScore = (player.kills || 0) * 10 + (player.assists || 0) * 5 - (player.deaths || 0) * 3;
@@ -272,7 +277,6 @@ export function computeEffectiveOVR(player: Player): number {
   const normalizedWinRate = (winRate - 0.5) * 2; // 0.5 win rate = neutral (0), 1.0 = +1, 0.0 = -1
 
   const performanceSignal = (normalizedScore * 0.6) + (normalizedWinRate * 0.4); // -1 to 1
-  const swing = performanceSignal * OVR_MAX_PERFORMANCE_SWING * trust;
 
-  return Math.round(Math.max(0, Math.min(100, baseOVR + swing)));
+  return Math.round(Math.max(0, Math.min(100, 50 + performanceSignal * 50)));
 }

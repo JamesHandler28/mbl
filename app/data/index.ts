@@ -10,6 +10,10 @@ import { STATIC_TEAMS } from './roster';
 import { S1_REGULAR_SEASON_LOGS, S1_REGULAR_SEASON_BRACKET, S1_REGULAR_SEASON_INFO } from './events/s1_regular_season';
 import { S1_PLAYOFFS_LOGS, S1_PLAYOFFS_BRACKET, S1_PLAYOFFS_INFO } from './events/s1_playoffs';
 
+// --- NEWS POSTS ---
+export { NEWS_POSTS } from './news';
+export type { NewsPost } from './news/_newsType';
+
 // 1. COMBINE ALL MATCH LOGS
 export const ALL_MATCH_LOGS = [
   ...S1_REGULAR_SEASON_LOGS,

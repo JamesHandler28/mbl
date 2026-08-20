@@ -10,22 +10,69 @@ export default function TeamsPage() {
     let wins = 0;
     let losses = 0;
     let majorWins = 0;
-    
+    let killsScored = 0;
+    let killsAllowed = 0;
+    // headToHead[opponentId] = { wins, losses } vs that specific opponent
+    const headToHead: Record<string, { wins: number; losses: number }> = {};
+
     leagueHistory.forEach(season => {
       season.events.forEach(event => {
         if (event.championId === team.id) majorWins++;
         event.matches.forEach(match => {
-          if (match.winner) {
-            if (match.winner === team.id) wins++;
-            else if (match.team1 === team.id || match.team2 === team.id) losses++;
+          const isTeam1 = match.team1 === team.id;
+          const isTeam2 = match.team2 === team.id;
+          if (!isTeam1 && !isTeam2) return;
+          if (!match.winner) return;
+
+          const opponentId = isTeam1 ? match.team2 : match.team1;
+          const won = match.winner === team.id;
+
+          if (won) wins++;
+          else losses++;
+
+          if (!headToHead[opponentId]) headToHead[opponentId] = { wins: 0, losses: 0 };
+          if (won) headToHead[opponentId].wins++;
+          else headToHead[opponentId].losses++;
+
+          // score is formatted "team1Kills-team2Kills"
+          const [k1, k2] = match.score.split('-').map(Number);
+          if (!isNaN(k1) && !isNaN(k2)) {
+            const myKills = isTeam1 ? k1 : k2;
+            const theirKills = isTeam1 ? k2 : k1;
+            killsScored += myKills;
+            killsAllowed += theirKills;
           }
         });
       });
     });
-    return { ...team, wins, losses, majorWins };
+
+    return { ...team, wins, losses, majorWins, killsScored, killsAllowed, headToHead };
   }).sort((a, b) => {
+    // 1. Major championships
     if (b.majorWins !== a.majorWins) return b.majorWins - a.majorWins;
-    return b.wins - a.wins;
+
+    // 2. Overall record
+    if (b.wins !== a.wins) return b.wins - a.wins;
+
+    // 3. Head-to-head record between these two specific teams
+    const aVsB = a.headToHead[b.id];
+    const bVsA = b.headToHead[a.id];
+    if (aVsB && bVsA) {
+      const aWinsVsB = aVsB.wins;
+      const bWinsVsA = bVsA.wins;
+      if (aWinsVsB !== bWinsVsA) return bWinsVsA - aWinsVsB;
+    }
+
+    // 4. Kill differential (kills scored - kills allowed)
+    const aDiff = a.killsScored - a.killsAllowed;
+    const bDiff = b.killsScored - b.killsAllowed;
+    if (bDiff !== aDiff) return bDiff - aDiff;
+
+    // 5. Total kills scored
+    if (b.killsScored !== a.killsScored) return b.killsScored - a.killsScored;
+
+    // 6. Still tied — fall back to alphabetical for a stable, deterministic order
+    return a.name.localeCompare(b.name);
   });
 
   return (
