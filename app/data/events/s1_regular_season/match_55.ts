@@ -11,7 +11,7 @@ export const MATCH_55: MatchWithLogs = {
   team2: "blue",
   winner: "blue",       // set to "red" or "blue" once played
   score: "2-4",       // e.g. "6-4"
-  videoUrl: undefined, // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
+  videoUrl: "https://youtube.com/shorts/mhyYCz-ci1E?feature=share", // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
   logs: {
     red: { result: "LOSS", gamesCount: 1, stats: {
         "Pinetree Lance": [0, 1, 1, 7],

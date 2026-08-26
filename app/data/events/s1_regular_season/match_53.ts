@@ -11,7 +11,7 @@ export const MATCH_53: MatchWithLogs = {
   team2: "red",
   winner: "red",       // set to "purple" or "red" once played
   score: "1-4",       // e.g. "6-4"
-  videoUrl: undefined, // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
+  videoUrl: "https://youtube.com/shorts/bp1FDMvjrI8?feature=share", // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
   logs: {
     purple: { result: "LOSS", gamesCount: 1, stats: {
         "Sharkbait Sword": [0, 1, 0, 0],

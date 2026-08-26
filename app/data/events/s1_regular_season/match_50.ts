@@ -11,7 +11,7 @@ export const MATCH_50: MatchWithLogs = {
   team2: "green",
   winner: "pink",       // set to "pink" or "green" once played
   score: "4-3",       // e.g. "6-4"
-  videoUrl: undefined, // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
+  videoUrl: "https://youtube.com/shorts/1p9wXHJb3RA?feature=share", // e.g. "https://youtube.com/shorts/XXXXXXXXXXX"
   logs: {
     pink: { result: "WIN", gamesCount: 1, stats: {
         "Chaos Scythe": [0, 1, 2, 10],
