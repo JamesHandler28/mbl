@@ -2,82 +2,38 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>MBL News — Week 4 Thumb</title>
+<title>Week 4 Thumb</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@700;900&family=Inter:wght@500;600&display=swap');
-
-  :root {
-    --navy-dark: #10202c;
-    --teal: #2a9d8f;
-    --gold: #f4c542;
-  }
-
+  
+  :root { --navy-dark: #10202c; --teal: #2a9d8f; --gold: #f4c542; }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
 
-  /* FIXED DESIGN CANVAS — 1280x720 (16:9). Intentionally simple: just
-     one hero stat, nothing else. This is the THUMBNAIL version, meant
-     to still read clearly even scaled down small on a list page. The
-     full multi-panel breakdown lives in the separate detail-page
-     graphic instead. */
   .canvas {
-    width: 1280px;
-    height: 720px;
+    width: 1280px; height: 720px;
     font-family: 'Inter', sans-serif;
-    background: linear-gradient(135deg, #1c3347 0%, var(--navy-dark) 100%);
+    background: radial-gradient(circle at 20% 50%, #f871712a 0%, var(--navy-dark) 60%);
     color: #eef4f8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     padding: 0 80px;
   }
-
-  .row {
-    display: flex;
-    align-items: center;
-    gap: 50px;
-  }
-
+  .row { display: flex; align-items: center; gap: 50px; }
   .portrait {
-    flex: 0 0 auto;
-    width: 260px;
-    aspect-ratio: 400 / 377;
-    height: auto;
-    object-fit: contain;
-    transform: translateY(20.6%);
-    filter: drop-shadow(0 6px 16px rgba(0,0,0,0.45));
+    flex: 0 0 auto; width: 260px; aspect-ratio: 400 / 377; height: auto;
+    object-fit: contain; transform: translateY(20.6%);
+    filter: drop-shadow(0 6px 16px #f8717155);
   }
-
-  .text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
+  .text { display: flex; flex-direction: column; justify-content: center; }
   .eyebrow {
-    font-size: 26px;
-    font-weight: 600;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--teal);
-    margin: 0 0 20px;
+    font-size: 26px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+    color: #f87171; margin: 0 0 20px;
   }
-
   .hero-number {
-    font-family: 'Rubik', sans-serif;
-    font-weight: 900;
-    font-size: 110px;
-    line-height: 1;
-    color: var(--gold);
-    margin: 0;
+    font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 92px;
+    line-height: 1; color: var(--gold); margin: 0;
   }
-
-  .hero-name {
-    font-size: 30px;
-    font-weight: 600;
-    color: #ffffff;
-    margin-top: 24px;
-  }
+  .hero-name { font-size: 30px; font-weight: 600; color: #ffffff; margin-top: 24px; }
 </style>
 </head>
 <body>

@@ -2,93 +2,78 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>MBL News — Week 3 Thumb</title>
+<title>Week 3 Thumb</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@700;900&family=Inter:wght@500;600&display=swap');
-
-  :root {
-    --navy-dark: #10202c;
-    --teal: #2a9d8f;
-    --gold: #f4c542;
-  }
-
+  
+  :root { --navy-dark: #10202c; --teal: #2a9d8f; --gold: #f4c542; }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
 
-  /* FIXED DESIGN CANVAS — 1280x720 (16:9). Intentionally simple: just
-     one hero stat, nothing else. This is the THUMBNAIL version, meant
-     to still read clearly even scaled down small on a list page. The
-     full multi-panel breakdown lives in the separate detail-page
-     graphic instead. */
   .canvas {
-    width: 1280px;
-    height: 720px;
+    width: 1280px; height: 720px;
     font-family: 'Inter', sans-serif;
-    background: linear-gradient(135deg, #1c3347 0%, var(--navy-dark) 100%);
     color: #eef4f8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 80px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(90deg, #60a5fa22 0%, var(--navy-dark) 46%, var(--navy-dark) 54%, #4ade8022 100%), var(--navy-dark);
   }
-
-  .row {
-    display: flex;
-    align-items: center;
-    gap: 50px;
+  .side {
+    position: absolute; top: 0; width: 50%; height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
   }
-
+  .side.left { left: 0; }
+  .side.right { right: 0; }
   .portrait {
-    flex: 0 0 auto;
-    width: 260px;
-    aspect-ratio: 400 / 377;
-    height: auto;
-    object-fit: contain;
+    width: 240px; aspect-ratio: 400 / 377; height: auto; object-fit: contain;
     transform: translateY(20.6%);
-    filter: drop-shadow(0 6px 16px rgba(0,0,0,0.45));
+    filter: drop-shadow(0 8px 20px rgba(0,0,0,0.5));
   }
-
-  .text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  .team-label {
+    font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 22px;
+    text-transform: uppercase; letter-spacing: 2px; margin-top: 14px;
   }
-
-  .eyebrow {
-    font-size: 26px;
-    font-weight: 600;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--teal);
-    margin: 0 0 20px;
+  .team-label.left { color: #60a5fa; }
+  .team-label.right { color: #4ade80; }
+  .vs {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 54px;
+    color: var(--gold); text-shadow: 0 0 30px rgba(244,197,66,0.6);
+    z-index: 5; background: var(--navy-dark); border-radius: 50%;
+    width: 110px; height: 110px; display: flex; align-items: center; justify-content: center;
+    border: 3px solid var(--gold);
   }
-
-  .hero-number {
-    font-family: 'Rubik', sans-serif;
-    font-weight: 900;
-    font-size: 110px;
-    line-height: 1;
-    color: var(--gold);
-    margin: 0;
+  .banner {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: rgba(16,32,44,0.92);
+    padding: 22px 40px;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.1);
   }
-
-  .hero-name {
-    font-size: 30px;
-    font-weight: 600;
-    color: #ffffff;
-    margin-top: 24px;
+  .banner-eyebrow {
+    font-size: 15px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--teal); margin: 0 0 4px;
+  }
+  .banner-stat {
+    font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 34px;
+    color: #ffffff; margin: 0;
   }
 </style>
 </head>
 <body>
   <div class="canvas">
-    <div class="row">
+    <div class="side left">
       <img class="portrait" src="/players/Rogue_Warhead.png" alt="Rogue Warhead">
-      <div class="text">
-        <p class="eyebrow">Week 3 · New Leader</p>
-        <p class="hero-number">#1 Overall</p>
-        <p class="hero-name">Rogue Warhead</p>
-      </div>
+      <p class="team-label left">Blue</p>
+    </div>
+    <div class="side right">
+      <img class="portrait" src="/players/Whale_Saber.png" alt="Whale Saber">
+      <p class="team-label right">Green</p>
+    </div>
+    <div class="vs">VS</div>
+    <div class="banner">
+      <p class="banner-eyebrow">Week 3 · New Leader, New Face</p>
+      <p class="banner-stat">#1 Overall + A Debut to Watch</p>
     </div>
   </div>
 </body>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Season 1 Awards Thumb</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@700;900&family=Inter:wght@500;600&display=swap');
+  
+  :root { --navy-dark: #10202c; --teal: #2a9d8f; --gold: #f4c542; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  .canvas {
+    width: 1280px; height: 720px;
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at 50% 20%, #f4c54222 0%, var(--navy-dark) 60%);
+    color: #eef4f8;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 40px;
+  }
+  .trophy { font-size: 56px; margin-bottom: 6px; }
+  .title {
+    font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 58px;
+    color: var(--gold); margin: 0 0 30px; text-shadow: 0 0 26px rgba(244,197,66,0.4);
+  }
+  .lineup { display: flex; align-items: flex-end; gap: 10px; }
+  .portrait {
+    width: 130px; aspect-ratio: 400 / 377; height: auto; object-fit: contain;
+    transform: translateY(20.6%);
+    filter: drop-shadow(0 5px 12px rgba(0,0,0,0.5));
+  }
+  .subtitle { font-size: 20px; color: #cbd5e1; margin-top: 18px; font-weight: 500; }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="trophy">🏆</div>
+    <p class="title">Season 1 Awards</p>
+    <div class="lineup">
+      <img class="portrait" src="/players/Whale_Saber.png" alt="">
+      <img class="portrait" src="/players/Chaos_Scythe.png" alt="">
+      <img class="portrait" src="/players/Zombie_Arm.png" alt="">
+      <img class="portrait" src="/players/Rogue_Warhead.png" alt="">
+    </div>
+    <p class="subtitle">MVP · Offense · Clutch · Fan Favorite</p>
+  </div>
+</body>
+</html>

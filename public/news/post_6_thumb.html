@@ -2,92 +2,81 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>MBL News — Week 6 Thumb</title>
+<title>Week 6 Thumb</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@700;900&family=Inter:wght@500;600&display=swap');
-
-  :root {
-    --navy-dark: #10202c;
-    --teal: #2a9d8f;
-    --gold: #f4c542;
-  }
-
+  :root { --navy-dark: #10202c; --teal: #2a9d8f; --gold: #f4c542; }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
-
-  /* FIXED DESIGN CANVAS — 1280x720 (16:9). Intentionally simple: just
-     one hero stat, nothing else. This is the THUMBNAIL version, meant
-     to still read clearly even scaled down small on a list page. The
-     full multi-panel breakdown lives in the separate detail-page
-     graphic instead. */
   .canvas {
-    width: 1280px;
-    height: 720px;
+    width: 1280px; height: 720px;
     font-family: 'Inter', sans-serif;
-    background: linear-gradient(135deg, #1c3347 0%, var(--navy-dark) 100%);
+    background: var(--navy-dark);
     color: #eef4f8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 80px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 40px;
   }
-
-  .row {
-    display: flex;
-    align-items: center;
-    gap: 50px;
-  }
-
-  .portrait {
-    flex: 0 0 auto;
-    width: 260px;
-    aspect-ratio: 400 / 377;
-    height: auto;
-    object-fit: contain;
-    transform: translateY(20.6%);
-    filter: drop-shadow(0 6px 16px rgba(0,0,0,0.45));
-  }
-
-  .text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
   .eyebrow {
-    font-size: 26px;
-    font-weight: 600;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--teal);
-    margin: 0 0 20px;
+    font-size: 20px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--teal); margin: 0 0 8px;
   }
-
-  .hero-number {
-    font-family: 'Rubik', sans-serif;
-    font-weight: 900;
-    font-size: 110px;
-    line-height: 1;
-    color: var(--gold);
-    margin: 0;
+  .title {
+    font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 46px;
+    color: #ffffff; margin: 0 0 34px;
   }
-
-  .hero-name {
-    font-size: 30px;
-    font-weight: 600;
-    color: #ffffff;
-    margin-top: 24px;
+  .row { display: flex; gap: 18px; }
+  .card {
+    width: 220px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 16px;
+    padding: 20px 14px;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    border-top: 4px solid var(--c);
   }
+  .rank {
+    font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 15px;
+    color: var(--c); letter-spacing: 1px; margin-bottom: 8px;
+  }
+  .portrait {
+    width: 110px; aspect-ratio: 400 / 377; height: auto; object-fit: contain;
+    transform: translateY(20.6%);
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4));
+  }
+  .team-name {
+    font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 22px;
+    color: #ffffff; margin-top: 6px;
+  }
+  .record { font-size: 16px; color: #9db3c4; margin-top: 2px; }
 </style>
 </head>
 <body>
   <div class="canvas">
+    <p class="eyebrow">Week 6 · One Week To Go</p>
+    <p class="title">The Playoff Picture</p>
     <div class="row">
-      <img class="portrait" src="/players/Whale_Saber.png" alt="Whale Saber">
-      <div class="text">
-        <p class="eyebrow">Week 6 · Widening Gap</p>
-        <p class="hero-number">178 vs 163</p>
-        <p class="hero-name">Whale Saber</p>
+      <div class="card" style="--c: #4ade80">
+        <p class="rank">#1 SEED</p>
+        <img class="portrait" src="/players/Whale_Saber.png" alt="Green">
+        <p class="team-name">Green</p>
+        <p class="record">9-3</p>
+      </div>
+      <div class="card" style="--c: #ef4a8f">
+        <p class="rank">#2 SEED</p>
+        <img class="portrait" src="/players/Chaos_Scythe.png" alt="Pink">
+        <p class="team-name">Pink</p>
+        <p class="record">8-4</p>
+      </div>
+      <div class="card" style="--c: #60a5fa">
+        <p class="rank">#3 SEED</p>
+        <img class="portrait" src="/players/Rogue_Warhead.png" alt="Blue">
+        <p class="team-name">Blue</p>
+        <p class="record">7-5</p>
+      </div>
+      <div class="card" style="--c: #8b7cf6">
+        <p class="rank">#4 SEED</p>
+        <img class="portrait" src="/players/Sharkbait_Sword.png" alt="Purple">
+        <p class="team-name">Purple</p>
+        <p class="record">7-5</p>
       </div>
     </div>
   </div>

@@ -21,6 +21,7 @@ import { POST_5 } from './posts/post_5';
 import { POST_6 } from './posts/post_6';
 import { POST_7 } from './posts/post_7';
 import { POST_8 } from './posts/post_8';
+import { POST_9 } from './posts/post_9';
 
 const ALL_POSTS: NewsPost[] = [
   POST_1,
@@ -31,6 +32,7 @@ const ALL_POSTS: NewsPost[] = [
   POST_6,
   POST_7,
   POST_8,
+  POST_9,
   // POST_9, ... add new posts here as you write them
 ];
 
