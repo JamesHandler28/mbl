@@ -1,18 +1,28 @@
-// match_2.ts — Semifinal 2 (seed 2 vs seed 3)
-// Same placeholder rules as match_1.ts — swap in real team ids once known.
+// match_2.ts — Semifinal 1, Game 2, Pink vs Purple
+// Map: Pinwheel.
 
 import { MatchWithLogs } from '../_matchType';
 
 export const MATCH_2: MatchWithLogs = {
-  id: "s1-po-sf2",
-  round: "Semifinals",
-  team1: "green",
-  team2: "blue",
-  winner: null,
-  score: "TBD",
+  id: "s1-p-m1-2",
+  round: "Semifinal 1",
+  team1: "pink",
+  team2: "purple",
+  winner: "pink",
+  score: "4-3",
   videoUrl: undefined,
   logs: {
-    "seed-2": { result: "LOSS", gamesCount: 1, stats: {} },
-    "seed-3": { result: "LOSS", gamesCount: 1, stats: {} },
+    pink: { result: "WIN", gamesCount: 1, stats: {
+        "Chaos Scythe": [2, 1, 1, 24],
+        "Cursed Cutlass": [0, 1, 1, 6],
+        "Snow Shovel": [1, 1, 1, 13],
+        "Spiderweb Wand": [1, 0, 0, 6],
+    } },
+    purple: { result: "LOSS", gamesCount: 1, stats: {
+        "Sharkbait Sword": [0, 1, 1, 6],
+        "Kitty Hammer": [3, 1, 0, 18],
+        "Crimson Katana": [0, 1, 1, 4],
+        "Rusty Cutlass": [0, 1, 1, 6],
+    } },
   }
 };

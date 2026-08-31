@@ -1,21 +1,28 @@
-// match_1.ts — Semifinal 1 (seed 1 vs seed 4)
-// IMPORTANT: team1/team2 are placeholders until the regular season ends.
-// Once standings are final, replace "seed-1"/"seed-4" with the real team
-// ids (best record = seed-1, 4th place = seed-4), and update the `logs`
-// keys below to match those same real team ids.
+// match_1.ts — Semifinal 1, Game 1, Pink vs Purple
+// Map: Wreckage (Even). Pink is the higher seed, home for Games 1 & 3.
 
 import { MatchWithLogs } from '../_matchType';
 
 export const MATCH_1: MatchWithLogs = {
-  id: "s1-po-sf1",
-  round: "Semifinals",
+  id: "s1-p-m1-1",
+  round: "Semifinal 1",
   team1: "pink",
   team2: "purple",
-  winner: null,
-  score: "TBD",
+  winner: "purple",
+  score: "3-4",
   videoUrl: undefined,
   logs: {
-    "seed-1": { result: "LOSS", gamesCount: 1, stats: {} },
-    "seed-4": { result: "LOSS", gamesCount: 1, stats: {} },
+    pink: { result: "LOSS", gamesCount: 1, stats: {
+        "Chaos Scythe": [0, 1, 1, 6],
+        "Cursed Cutlass": [0, 1, 0, 4],
+        "Snow Shovel": [1, 1, 0, 10],
+        "Spiderweb Wand": [2, 1, 0, 19],
+    } },
+    purple: { result: "WIN", gamesCount: 1, stats: {
+        "Sharkbait Sword": [3, 0, 1, 24],
+        "Kitty Hammer": [0, 1, 1, 7],
+        "Crimson Katana": [1, 1, 1, 12],
+        "Rusty Cutlass": [0, 1, 1, 6],
+    } },
   }
 };
