@@ -1,13 +1,15 @@
 // app/data/news/index.ts
 //
 // Collects every individual post into one sorted list. Each post is a
-// single flat file under posts/ — e.g. posts/post_1.ts. The graphic it
-// references (post_1.html) lives only in public/news/, served directly
-// to the browser — there's no separate copy kept here.
+// single flat file under posts/ — e.g. posts/post_1.ts. Every post has
+// TWO graphics: thumbGraphicFile (hero card + grid cards) and
+// graphicFile (full detail, detail page only) — both served straight
+// from public/news/.
 //
 // Add a new post by:
 //   1. Creating posts/post_N.ts (copy an existing one's shape)
-//   2. Saving the graphic's HTML directly to public/news/post_N.html
+//   2. Saving both graphics directly to public/news/post_N_thumb.html
+//      and public/news/post_N.html
 //   3. Importing it below and adding it to ALL_POSTS
 
 import { NewsPost } from './_newsType';
@@ -18,6 +20,7 @@ import { POST_4 } from './posts/post_4';
 import { POST_5 } from './posts/post_5';
 import { POST_6 } from './posts/post_6';
 import { POST_7 } from './posts/post_7';
+import { POST_8 } from './posts/post_8';
 
 const ALL_POSTS: NewsPost[] = [
   POST_1,
@@ -27,7 +30,8 @@ const ALL_POSTS: NewsPost[] = [
   POST_5,
   POST_6,
   POST_7,
-  // POST_8, ... add new posts here as you write them
+  POST_8,
+  // POST_9, ... add new posts here as you write them
 ];
 
 // Newest first

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MBL News — Season 1 Champions Thumb</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@700;900&family=Inter:wght@500;600&display=swap');
+  :root { --navy-dark: #10202c; --teal: #2a9d8f; --gold: #f4c542; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  .canvas {
+    width: 1280px; height: 720px;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #1c3347 0%, var(--navy-dark) 100%);
+    color: #eef4f8;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 80px;
+  }
+  .row { display: flex; align-items: center; gap: 50px; }
+  .portrait {
+    flex: 0 0 auto; width: 260px; aspect-ratio: 400 / 377; height: auto;
+    object-fit: contain; transform: translateY(20.6%);
+    filter: drop-shadow(0 6px 16px rgba(0,0,0,0.45));
+  }
+  .text { display: flex; flex-direction: column; justify-content: center; }
+  .eyebrow { font-size: 26px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--teal); margin: 0 0 20px; }
+  .hero-number { font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 96px; line-height: 1; color: var(--gold); margin: 0; }
+  .hero-name { font-size: 30px; font-weight: 600; color: #ffffff; margin-top: 24px; }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="row">
+      <img class="portrait" src="/players/Zombie_Arm.png" alt="Zombie Arm">
+      <div class="text">
+        <p class="eyebrow">Season 1 · Champions</p>
+        <p class="hero-number">Blue</p>
+        <p class="hero-name">Never swept, never beat</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
